@@ -2,149 +2,103 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-  <title>QuickMath</title>
+  <title>وضعیت سرورها</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    @import url('https://fonts.googleapis.com/css?family=Orbitron&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
     body {
       margin:0; padding:0;
-      background: url('https://mir‑s3‑cdn‑cf.behance.net/project_modules/1400/273126115942507.6067070353764.gif') center/cover no-repeat;
-      font-family: 'Orbitron', sans-serif;
-      color:#fff;
-      direction: rtl;
+      font-family:'Vazirmatn',sans-serif;
+      background: url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/273126115942507.6067070353764.gif') center/cover no-repeat;
+      direction:rtl; color:#fff; text-align:center;
     }
     h1 {
-      text-align:center; font-size:60px;
-      animation: neonText 3s ease-in-out infinite alternate;
-      text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff,0 0 30px #08f;
-      margin-top:50px;
+      font-family:'Orbitron',sans-serif;
+      font-size:56px; margin-top:30px;
+      animation: glowText 3s ease-in-out infinite alternate;
+      text-shadow:
+        0 0 5px #0ff, 0 0 10px #0ff,
+        0 0 20px #0ff, 0 0 40px #08f;
     }
-    @keyframes neonText {
-      from {
-        text-shadow: 0 0 5px #0ff,0 0 10px #0ff;
-        color:#0ff;
-      }
-      to {
-        text-shadow:0 0 20px #0ff,0 0 40px #0ff,0 0 60px #08f;
-        color:#8ff;
-      }
+    @keyframes glowText {
+      from { color:#0ff; text-shadow:0 0 5px #0ff,0 0 10px #0ff; }
+      to   { color:#8ff; text-shadow:0 0 20px #0ff,0 0 40px #08f,0 0 60px #0ff; }
     }
-    .buttons { display:flex; justify-content:center; gap:40px; margin-top:40px; }
-    .neon-btn {
-      position:relative;
-      width:200px; height:100px;
-      border:4px solid #0ff;
+    .container {
+      display:flex; justify-content:center;
+      gap:40px; margin:60px auto 40px;
+    }
+    .server-box {
+      background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
+        url('') no-repeat center center;
       background-size:cover;
+      border:4px solid;
+      border-radius:16px;
+      width:200px; height:120px;
+      position:relative;
       cursor:pointer;
-      transition: box-shadow .3s;
+      box-shadow:0 0 15px cyan,0 0 30px cyan;
+      animation: neonBorder 3s infinite alternate;
     }
-    .neon-btn:hover {
-      box-shadow: 0 0 20px #0ff, 0 0 40px #0ff, 0 0 60px #08f;
-    }
-    .neon-btn span {
+    .server-box span {
       position:absolute; inset:0;
       display:flex; align-items:center; justify-content:center;
-      font-size:24px; background:rgba(0,0,0,0.3);
+      font-size:22px;
+      color:#0ff;
+      text-shadow:0 0 5px #0ff,0 0 10px #0ff;
     }
-    .btn1 { background-image: url('https://4kwallpapers.com/images/walls/thumbs_2t/11129.png'); }
-    .btn2 { background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvnj_wYSNBI2wjdrooFAQVFYNoFNF8N3MgCGc04hwRikoMEtFEZzNkxOE05T97OfHxNl8&usqp=CAU'); }
-    .server-area { text-align:center; margin-top:30px; }
-    .server-area button { padding:10px 20px; font-size:18px; cursor:pointer; color:#0ff; border:2px solid #0ff; }
-    .modal {
-      position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
-      background:#000b; padding:20px; border:2px solid #0ff;
-      color:#fff; display:none;
+    .server1 { background-image:url('https://4kwallpapers.com/images/walls/thumbs_2t/11129.png'); }
+    .server2 { background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvnj_wYSNBI2wjdrooFAQVFYNoFNF8N3MgCGc04hwRikoMEtFEZzNkxOE05T97OfHxNl8&usqp=CAU'); }
+    @keyframes neonBorder {
+      from { border-color:#0ff; box-shadow:0 0 15px cyan; }
+      to   { border-color:#08f; box-shadow:0 0 30px cyan; }
     }
-    .modal select, .modal button { margin-top:10px; font-size:16px; }
-    .message { margin-top:20px; font-size:20px; }
-    .user-btn {
-      position:fixed; top:20px; right:20px;
-      padding:10px 15px; border:2px solid #0ff;
-      color:#0ff; cursor:pointer; animation: glowBtn 2s ease-in-out infinite alternate;
-    }
-    @keyframes glowBtn {
-      from { box-shadow:0 0 10px #0ff; }
-      to { box-shadow:0 0 20px #0ff,0 0 30px #08f; }
-    }
-    .user-panel {
-      position:fixed; top:60px; right:20px;
-      width:240px; background: rgba(0,255,200,0.2);
-      border:2px solid #0ff; backdrop-filter:blur(10px);
-      color:#000; padding:10px; display:none;
-      font-size:16px;
-    }
-    .user-panel .close-btn {
-      position:absolute; top:5px; left:5px;
-      background:#000; color:#f00; border:none; cursor:pointer;
-    }
-    .footnote {
-      position:fixed; bottom:10px; width:100%;
-      text-align:center; font-size:18px;
-      color:#f00; text-shadow:0 0 5px red,0 0 10px red;
-    }
+    .hidden { display:none; }
+    .modal { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+      background:#000b; padding:20px; border:2px solid cyan;
+      color:#fff; display:none; }
+    .modal select, .modal button { margin-top:10px; font-size:16px; padding:6px; }
+    .message { margin-top:20px; font-size:20px; font-weight:bold; }
   </style>
 </head>
 <body>
-  <button class="user-btn">پنل کاربری</button>
-  <div class="user-panel">
-    <button class="close-btn">×</button>
-    <div>رنک: فعال نشده</div>
-    <div>پلی تایم: ۰ ساعت</div>
-    <div>اشتراک: بدون اشتراک</div>
-  </div>
-
   <h1>QuickMath</h1>
-  <div class="server-area">
-    <button id="serversBtn">Servers</button>
-  </div>
-  <div class="buttons">
-    <div class="neon-btn btn1"><span>کلیک کنید</span></div>
-    <div class="neon-btn btn2"><span>کلیک کنید</span></div>
-  </div>
-
-  <div class="modal" id="srvModal">
-    <div>انتخاب سرور:</div>
-    <select id="srvSelect">
-      <option value="1">سرور اول</option>
-      <option value="2">سرور دوم</option>
-      <option value="3">سرور سوم</option>
-    </select><br>
-    <button id="confirmSrv">تأیید</button>
-    <div class="message" id="srvMsg"></div>
+  <div class="container">
+    <div class="server-box server1" onclick="chooseServer(1)">
+      <span>سرور اول</span>
+    </div>
+    <div class="server-box server2" onclick="chooseServer(2)">
+      <span>سرور دوم</span>
+    </div>
   </div>
 
-  <div class="footnote">برای اتصال به سرورها به ادمین پیام بدهید!</div>
+  <div class="modal" id="modal">
+    <div>تأیید اتصال به سرور:</div>
+    <button onclick="confirm()">تأیید</button>
+    <div id="msg" class="message"></div>
+  </div>
 
 <script>
-  document.getElementById('serversBtn').onclick = () => {
-    document.getElementById('srvModal').style.display = 'block';
-  };
-  document.getElementById('confirmSrv').onclick = () => {
-    const sel = document.getElementById('srvSelect').value;
-    const msg = document.getElementById('srvMsg');
-    msg.style.fontWeight='bold';
-    if(sel==='1'){
-      msg.textContent='در حال اتصال...'; msg.style.color='lime';
-      setTimeout(()=>{
-        msg.textContent='اتصال قطع شد'; msg.style.color='red';
-      },4000);
+  let selected = 0;
+  function chooseServer(n) {
+    selected = n;
+    document.getElementById('modal').style.display = 'block';
+    document.getElementById('msg').textContent = '';
+  }
+  function confirm() {
+    const msg = document.getElementById('msg');
+    if(selected === 1) {
+      msg.textContent = 'در حال اتصال...'; msg.style.color='lime';
+      setTimeout(() => {
+        msg.textContent = 'اتصال قطع شد'; msg.style.color='red';
+      }, 4000);
+    } else if(selected === 2) {
+      msg.textContent = 'در حال اتصال...'; msg.style.color='lime';
+      setTimeout(() => {
+        msg.textContent = 'اتصال ممکن نیست'; msg.style.color='red';
+      }, 4000);
     }
-    else if(sel==='2'){
-      msg.textContent='در حال اتصال...'; msg.style.color='lime';
-      setTimeout(()=>{
-        msg.textContent='اتصال ممکن نیست'; msg.style.color='red';
-      },4000);
-    }
-    else if(sel==='3'){
-      msg.textContent='سرور از دسترس خارج شده است !'; msg.style.color='orange';
-    }
-  };
-  document.querySelector('.user-btn').onclick = () => {
-    const p = document.querySelector('.user-panel');
-    p.style.display = p.style.display==='block'? 'none':'block';
-  };
-  document.querySelector('.close-btn').onclick = () => {
-    document.querySelector('.user-panel').style.display='none';
-  };
+  }
 </script>
 </body>
 </html>
