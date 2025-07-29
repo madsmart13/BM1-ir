@@ -1,179 +1,287 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <title>وضعیت سرورها</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
+<meta charset="UTF-8" />
+<title>پنل گیمینگ نئونی</title>
+<style>
+  body {
+    font-family: 'Vazirmatn', sans-serif;
+    background: #000;
+    margin: 6px;
+    direction: rtl;
+    color: #eee;
+  }
 
-    body {
-      margin: 0;
-      font-family: 'Vazirmatn', sans-serif;
-      background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/273126115942507.6067070353764.gif');
-      background-size: cover;
-      background-position: center;
-      direction: rtl;
-      color: white;
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: flex-start;
-      gap: 20px;
-      padding: 40px 10px;
-    }
+  /* باکس گوشه بالا راست */
+  .corner-box {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: #111;
+    padding: 10px 20px;
+    border-radius: 15px;
+    color: #0ff;
+    font-weight: bold;
+    box-shadow: 0 0 10px #0ff;
+    z-index: 9999;
+  }
 
-    .server-box {
-      background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65));
-      border: 4px solid;
-      border-radius: 20px;
-      width: 350px;
-      min-height: 400px;
-      padding: 30px 20px;
-      position: relative;
-      animation: rgb-border 4s linear infinite;
-      text-align: center;
-    }
+  /* دکمه پنل */
+  #openPanelBtn {
+    padding: 10px 20px;
+    font-size: 15px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(45deg, #0ff, #f0f);
+    color: white;
+    box-shadow: 0 0 10px #0ff, 0 0 20px #f0f;
+    margin-top: 100px;
+  }
+  #openPanelBtn:hover {
+    box-shadow: 0 0 20px #0ff, 0 0 40px #f0f;
+  }
 
-    @keyframes rgb-border {
-      0%   { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
-      25%  { border-color: #00ff00; box-shadow: 0 0 15px #00ff00; }
-      50%  { border-color: #0000ff; box-shadow: 0 0 15px #0000ff; }
-      75%  { border-color: #ffff00; box-shadow: 0 0 15px #ffff00; }
-      100% { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
-    }
+  #userPanel {
+    display: none;
+    background: linear-gradient(145deg, #121212, #1a1a1a);
+    border-radius: 20px;
+    width: 360px;
+    box-shadow: 0 0 12px #0ff, 0 0 30px #f0f, inset 0 0 20px #222;
+    padding: 30px 30px 40px;
+    margin-top: 30px;
+    color: #ccc;
+    position: relative;
+  }
+  #userPanel h2 {
+    font-size: 28px;
+    color: #0ff;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-align: center;
+    text-shadow: 0 0 10px #0ff;
+  }
+  .info-row {
+    background: #222;
+    margin-bottom: 18px;
+    border-radius: 12px;
+    padding: 14px 18px;
+    box-shadow: 0 0 5px #0ff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 17px;
+    font-weight: 600;
+    color: #aaffff;
+    text-shadow: 0 0 6px #0ff;
+  }
+  .info-row .label {
+    opacity: 0.7;
+    font-weight: 400;
+    color: #88eeff;
+  }
+  #closePanelBtn {
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    font-size: 26px;
+    color: #f0f;
+    cursor: pointer;
+    user-select: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    text-shadow: 0 0 8px #f0f;
+  }
+  #closePanelBtn:hover {
+    color: #0ff;
+    text-shadow: 0 0 12px #0ff;
+  }
+  .progress-circle {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: conic-gradient(#0ff 360deg, #222 0deg);
+    box-shadow: 0 0 6px #0ff inset;
+    margin-left: 12px;
+    flex-shrink: 0;
+    transition: background 0.3s ease;
+  }
+  .progress-circle span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #0ff;
+    font-size: 14px;
+    font-weight: 700;
+    user-select: none;
+    text-shadow: 0 0 4px #0ff;
+  }
 
-    .wifi-icon {
-      width: 60px;
-      height: 60px;
-      position: absolute;
-      top: -30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #121212;
-      padding: 5px;
-      border-radius: 50%;
-      border: 2px solid red;
-      box-shadow: 0 0 10px red;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.4s ease;
-    }
-
-    .wifi-icon img {
-      width: 32px;
-      height: 32px;
-      transition: transform 0.4s ease;
-    }
-
-    .connecting {
-      border-color: #00ff66 !important;
-      box-shadow: 0 0 15px #00ff66 !important;
-      animation: spin 1.2s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: translateX(-50%) rotate(0deg); }
-      100% { transform: translateX(-50%) rotate(360deg); }
-    }
-
-    .connecting img {
-      transform: scale(1.5);
-    }
-
-    .server-box h2 {
-      font-size: 24px;
-      margin-top: 40px;
-      transition: color 0.3s ease;
-    }
-
-    .status-default {
-      color: white;
-    }
-
-    .status-connecting {
-      color: #00ff66;
-      text-shadow: 0 0 10px #00ff66;
-    }
-
-    .status-offline {
-      color: #ff4444;
-    }
-
-    .alert {
-      margin-top: 25px;
-      font-size: 16px;
-      color: #ffaaaa;
-    }
-
-    .connect-btn {
-      margin-top: 30px;
-      padding: 12px 25px;
-      font-size: 18px;
-      background-color: #2196f3;
-      border: none;
-      border-radius: 10px;
-      color: white;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-
-    .connect-btn:hover {
-      background-color: #1976d2;
-    }
-
-    .message-box {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #ffa;
-      display: none;
-    }
-  </style>
+  /* Quick Match */
+  .quick-match-container {
+    text-align: center;
+    margin-top: 50px;
+  }
+  .neon-title {
+    font-size: 28px;
+    color: #0ff;
+    text-shadow: 0 0 10px #0ff, 0 0 20px #f0f;
+    margin-bottom: 20px;
+    font-weight: bold;
+  }
+  #serversToggleBtn, .confirm-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 15px;
+    border: none;
+    margin: 10px;
+    cursor: pointer;
+    background: linear-gradient(45deg, #f0f, #0ff);
+    color: white;
+    box-shadow: 0 0 10px #f0f, 0 0 20px #0ff;
+  }
+  .server-select-container {
+    margin: 10px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-width: 220px;
+    text-align: right;
+  }
+  .hidden {
+    display: none;
+  }
+  #arrow {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    margin-right: 5px;
+  }
+  .message-box {
+    margin-top: 15px;
+    font-weight: bold;
+    text-shadow: 0 0 5px #0ff;
+  }
+</style>
 </head>
 <body>
 
-  <div class="server-box">
-    <div class="wifi-icon" id="wifiIcon1">
-      <img src="https://cdn-icons-png.flaticon.com/512/8603/8603448.png" alt="قطع اتصال">
-    </div>
-    <h2 id="statusTitle1" class="status-default">کلیک کنید</h2>
-    <p class="alert">⛔ برای اتصال به ادمین پیام بدهید</p>
-    <button class="connect-btn" onclick="startConnection(1, 3000, 'offline')">اتصال</button>
-    <div id="message1" class="message-box">در حال بررسی وضعیت سرور...</div>
+<div class="corner-box">🔥 BM1 Server</div>
+
+<!-- بخش Quick Match -->
+<div class="quick-match-container">
+  <div class="neon-title">Quick Match</div>
+  <button id="serversToggleBtn"><span id="arrow">▼</span> سرورها</button>
+
+  <div class="server-select-container hidden" id="serverSelectContainer">
+    <label><input type="radio" name="server" value="server1"> سرور شماره 1</label>
+    <label><input type="radio" name="server" value="server2"> سرور شماره 2</label>
+    <label><input type="radio" name="server" value="server3"> سرور شماره 3</label>
   </div>
 
-  <div class="server-box">
-    <div class="wifi-icon" id="wifiIcon2">
-      <img src="https://cdn-icons-png.flaticon.com/512/8603/8603448.png" alt="قطع اتصال">
+  <div class="message-box" id="messageBox"></div>
+  <button class="confirm-btn" id="confirmBtn">تأیید</button>
+</div>
+
+<!-- پنل کاربری -->
+<button id="openPanelBtn" aria-expanded="false" aria-controls="userPanel">پنل کاربری</button>
+
+<div id="userPanel" role="region" aria-labelledby="panelTitle">
+  <h2 id="panelTitle">پنل کاربری شما</h2>
+  <div class="info-row"><span class="label">رنک:</span><span>فعال نشده!</span></div>
+  <div class="info-row">
+    <span class="label">مدت بازی در سرور:</span>
+    <div style="display:flex; align-items:center;">
+      <div class="progress-circle"><span id="progressPercent">100%</span></div>
+      <span id="playtimeText">0 ساعت</span>
     </div>
-    <h2 id="statusTitle2" class="status-default">کلیک کنید</h2>
-    <p class="alert">⛔ برای اتصال به ادمین پیام بدهید</p>
-    <button class="connect-btn" onclick="startConnection(2, 3000, 'offline')">اتصال</button>
-    <div id="message2" class="message-box">در حال بررسی وضعیت سرور...</div>
   </div>
+  <div class="info-row"><span class="label">اشتراک:</span><span>بدون اشتراک</span></div>
+  <div id="closePanelBtn" role="button" tabindex="0" aria-label="بستن پنل">&times;</div>
+</div>
 
-  <script>
-    function startConnection(id, delay, result) {
-      const icon = document.getElementById('wifiIcon' + id);
-      const title = document.getElementById('statusTitle' + id);
-      const message = document.getElementById('message' + id);
+<!-- اسکریپت -->
+<script>
+  const openBtn = document.getElementById('openPanelBtn');
+  const userPanel = document.getElementById('userPanel');
+  const closeBtn = document.getElementById('closePanelBtn');
+  const progressCircle = userPanel.querySelector('.progress-circle');
+  const progressPercent = document.getElementById('progressPercent');
 
-      icon.classList.add('connecting');
-      title.textContent = 'در حال اتصال...';
-      title.className = 'status-connecting';
-      message.style.display = 'block';
-      message.textContent = 'لطفاً منتظر بمانید...';
-
-      setTimeout(() => {
-        icon.classList.remove('connecting');
-        title.className = 'status-offline';
-        title.textContent = 'سرور آفلاین است!';
-        message.textContent = '⛔ اتصال ممکن نیست. سرور در حال حاضر آفلاین است.';
-      }, delay);
+  function animateProgress(from, to, duration) {
+    let start = null;
+    function step(timestamp) {
+      if (!start) start = timestamp;
+      const progress = timestamp - start;
+      const percent = Math.max(to, from - (from - to) * (progress / duration));
+      const degrees = (percent / 100) * 360;
+      progressCircle.style.background = `conic-gradient(#0ff 0deg, #0ff ${degrees}deg, #222 ${degrees}deg 360deg)`;
+      progressPercent.textContent = `${Math.round(percent)}%`;
+      if (progress < duration) {
+        window.requestAnimationFrame(step);
+      } else {
+        progressCircle.style.background = `conic-gradient(#0ff 0deg, #0ff ${to * 3.6}deg, #222 ${to * 3.6}deg 360deg)`;
+        progressPercent.textContent = `${to}%`;
+      }
     }
-  </script>
+    window.requestAnimationFrame(step);
+  }
+
+  openBtn.addEventListener('click', () => {
+    userPanel.style.display = 'block';
+    openBtn.setAttribute('aria-expanded', 'true');
+    animateProgress(100, 0, 1000);
+  });
+
+  closeBtn.addEventListener('click', () => {
+    userPanel.style.display = 'none';
+    openBtn.setAttribute('aria-expanded', 'false');
+    progressCircle.style.background = `conic-gradient(#0ff 0deg, #0ff 360deg, #222 360deg 360deg)`;
+    progressPercent.textContent = '100%';
+  });
+
+  closeBtn.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      closeBtn.click();
+    }
+  });
+
+  // Quick Match toggle & confirm
+  const serversToggleBtn = document.getElementById('serversToggleBtn');
+  const arrow = document.getElementById('arrow');
+  const sel = document.getElementById('serverSelectContainer');
+  const msg = document.getElementById('messageBox');
+  const btn = document.getElementById('confirmBtn');
+
+  serversToggleBtn.addEventListener('click', () => {
+    const isOpen = !sel.classList.contains('hidden');
+    if (isOpen) {
+      sel.classList.add('hidden');
+      arrow.style.transform = 'rotate(0deg)';
+      msg.textContent = '';
+    } else {
+      sel.classList.remove('hidden');
+      arrow.style.transform = 'rotate(180deg)';
+    }
+  });
+
+  btn.addEventListener('click', () => {
+    const s = document.querySelector('input[name="server"]:checked');
+    if (!s) {
+      alert('لطفاً یک سرور انتخاب کنید!');
+      return;
+    }
+    msg.textContent = 'درحال اتصال به ' + s.labels[0].textContent + '...';
+    msg.style.color = '#0f0';
+    setTimeout(() => {
+      msg.textContent = 'سرور آفلاین است!';
+      msg.style.color = '#f44';
+    }, 3000);
+  });
+</script>
 
 </body>
 </html>
