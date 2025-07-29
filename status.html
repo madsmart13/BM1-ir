@@ -2,9 +2,10 @@
 <html lang="fa">
 <head>
 <meta charset="UTF-8" />
-<title>پنل کاربری و وضعیت سرورها</title>
+<title>صفحه سرورها</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
+  /* فونت و تنظیمات اولیه */
   @font-face {
     font-family: 'Minecraftia';
     src: url('https://cdn.jsdelivr.net/gh/asteroidmax/minecraftia/Minecraftia.ttf') format('truetype');
@@ -13,37 +14,39 @@
   body {
     margin: 0;
     padding: 20px;
-    background-color: #000000;
+    background: url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/273126115942507.6067070353764.gif') no-repeat center center fixed;
+    background-size: cover;
     font-family: 'Minecraftia', sans-serif;
     color: #fff;
     direction: rtl;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    overflow: hidden;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
   }
 
-  .hidden {
-    display: none !important;
+  /* --- دکمه باز کردن پنل کاربری --- */
+  #openPanelBtn {
+    position: fixed;
+    top: 20px; /* کمی پایین تر از بالا */
+    right: 30px; /* کمی از گوشه فاصله */
+    padding: 10px 20px;
+    font-size: 15px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(45deg, #0ff, #f0f);
+    color: white;
+    box-shadow: 0 0 10px #0ff, 0 0 20px #f0f;
+    z-index: 9999;
+    user-select: none;
+    transition: box-shadow 0.3s ease;
   }
 
-  /* عنوان نئونی */
-  .neon-title {
-    font-size: 48px;
-    animation: rgbNeon 6s linear infinite;
-    text-shadow: 0 0 4px #0f0, 0 0 8px #0f0, 0 0 12px #0f0;
-    margin-bottom: 20px;
-  }
-  @keyframes rgbNeon {
-    0% { color: #00ff00; }
-    33% { color: #00ffff; }
-    66% { color: #ff00ff; }
-    100% { color: #00ff00; }
+  #openPanelBtn:hover {
+    box-shadow: 0 0 20px #0ff, 0 0 40px #f0f;
   }
 
-  /* دکمه سرورها */
+  /* --- استایل بخش اول: انتخاب سرورها --- */
   #serversToggleBtn {
     font-size: 20px;
     padding: 12px 36px;
@@ -60,6 +63,7 @@
     align-items: center;
     margin-bottom: 15px;
   }
+
   #serversToggleBtn:hover {
     transform: scale(1.05);
   }
@@ -144,7 +148,9 @@
     box-shadow: 0 0 8px #556655, 0 0 18px #1a9988, 0 0 28px #4ea;
     cursor: pointer;
     user-select: none;
+    margin-bottom: 40px;
   }
+
   .confirm-btn:hover {
     transform: scale(1.05);
   }
@@ -159,134 +165,142 @@
     50% { background-position: 100% 50%; }
   }
 
-  /* پنل کاربری نئونی */
-  #openPanelBtn {
-    padding: 8px 16px;
-    font-size: 15px;
-    border-radius: 25px;
-    border: none;
-    cursor: pointer;
-    background: linear-gradient(45deg, #0ff, #f0f);
-    color: white;
-    box-shadow: 0 0 6px #0ff, 0 0 12px #f0f;
-    margin-bottom: 20px;
-    transition: box-shadow 0.3s ease;
+  .hidden {
+    display: none !important;
   }
-  #openPanelBtn:hover {
-    box-shadow: 0 0 12px #0ff, 0 0 24px #f0f;
-  }
-  #userPanel {
-    display: none;
-    background: linear-gradient(145deg, #121212, #1a1a1a);
+
+  /* --- بخش دوم: وضعیت سرور (کد دوم شما) --- */
+
+  .server-box-2 {
+    background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
+                url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIpbiNoYX5ei5NWDxQjgcjeuQZklLU5V9hXw&s') no-repeat center center;
+    background-size: cover;
+    border: 4px solid;
     border-radius: 20px;
-    width: 360px;
-    box-shadow: 0 0 12px #0ff, 0 0 30px #f0f, inset 0 0 20px #222;
-    padding: 30px 30px 40px;
-    margin-top: 30px;
-    color: #ccc;
+    max-width: 400px;
+    margin: 40px auto 60px;
+    padding: 30px 20px;
     position: relative;
-  }
-  #userPanel h2 {
-    font-size: 28px;
-    color: #0ff;
-    margin-top: 0;
-    margin-bottom: 25px;
-    font-weight: 700;
-    letter-spacing: 1px;
+    animation: rgb-border 4s linear infinite;
+    color: white;
     text-align: center;
-    text-shadow: 0 0 10px #0ff;
   }
-  .info-row {
-    background: #222;
-    margin-bottom: 18px;
-    border-radius: 12px;
-    padding: 14px 18px;
-    box-shadow: 0 0 5px #0ff;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 17px;
-    font-weight: 600;
-    color: #aaffff;
-    text-shadow: 0 0 6px #0ff;
+
+  @keyframes rgb-border {
+    0%   { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
+    25%  { border-color: #00ff00; box-shadow: 0 0 15px #00ff00; }
+    50%  { border-color: #0000ff; box-shadow: 0 0 15px #0000ff; }
+    75%  { border-color: #ffff00; box-shadow: 0 0 15px #ffff00; }
+    100% { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
   }
-  .info-row .label {
-    opacity: 0.7;
-    font-weight: 400;
-    color: #88eeff;
-  }
-  #closePanelBtn {
+
+  .wifi-icon-2 {
+    width: 60px;
+    height: 60px;
     position: absolute;
-    top: 15px;
-    left: 20px;
-    font-size: 26px;
-    color: #f0f;
-    cursor: pointer;
-    user-select: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
-    text-shadow: 0 0 8px #f0f;
-  }
-  #closePanelBtn:hover {
-    color: #0ff;
-    text-shadow: 0 0 12px #0ff;
-  }
-  /* دایره درصد */
-  .progress-circle {
-    position: relative;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: conic-gradient(#0ff 360deg, #222 0deg);
-    box-shadow: 0 0 6px #0ff inset;
-    margin-left: 12px;
-    flex-shrink: 0;
-    transition: background 0.3s ease;
-  }
-  .progress-circle span {
-    position: absolute;
-    top: 50%;
+    top: -30px;
     left: 50%;
-    transform: translate(-50%, -50%);
-    color: #0ff;
-    font-size: 14px;
-    font-weight: 700;
-    user-select: none;
-    text-shadow: 0 0 4px #0ff;
+    transform: translateX(-50%);
+    background-color: #121212;
+    padding: 5px;
+    border-radius: 50%;
+    border: 2px solid red;
+    box-shadow: 0 0 10px red;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
   }
+
+  .wifi-icon-2 img {
+    width: 32px;
+    height: 32px;
+    transition: transform 0.4s ease;
+  }
+
+  .connecting-2 {
+    border-color: #00ff66 !important;
+    box-shadow: 0 0 15px #00ff66 !important;
+    animation: spin 1.2s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: translateX(-50%) rotate(0deg); }
+    100% { transform: translateX(-50%) rotate(360deg); }
+  }
+
+  .connecting-2 img {
+    transform: scale(1.5);
+  }
+
+  .server-box-2 h2 {
+    font-size: 24px;
+    margin-top: 40px;
+    transition: color 0.3s ease;
+  }
+
+  .status-default-2 {
+    color: white;
+  }
+
+  .status-connecting-2 {
+    color: #00ff66;
+    text-shadow: 0 0 10px #00ff66;
+  }
+
+  .status-offline-2 {
+    color: #ff4444;
+  }
+
+  .alert-2 {
+    margin-top: 25px;
+    font-size: 16px;
+    color: #ffaaaa;
+  }
+
+  .connect-btn-2 {
+    margin-top: 30px;
+    padding: 12px 25px;
+    font-size: 18px;
+    background-color: #2196f3;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+
+  .connect-btn-2:hover {
+    background-color: #1976d2;
+  }
+
+  .message-box-2 {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #ffa;
+    display: none;
+  }
+
 </style>
 </head>
 <body>
 
-  <div class="neon-title">Quick Match</div>
-
+  <!-- دکمه باز کردن پنل کاربری -->
   <button id="openPanelBtn" aria-expanded="false" aria-controls="userPanel">پنل کاربری</button>
 
-  <div id="userPanel" role="region" aria-labelledby="panelTitle">
-    <h2 id="panelTitle">پنل کاربری شما</h2>
-    <div class="info-row"><span class="label">رنک:</span><span>فعال نشده!</span></div>
-    <div class="info-row">
-      <span class="label">مدت بازی در سرور:</span>
-      <div style="display:flex; align-items:center;">
-        <div class="progress-circle"><span id="progressPercent">100%</span></div>
-        <span id="playtimeText">0 ساعت</span>
-      </div>
-    </div>
-    <div class="info-row"><span class="label">اشتراک:</span><span>بدون اشتراک</span></div>
-    <div id="closePanelBtn" role="button" tabindex="0" aria-label="بستن پنل">&times;</div>
-  </div>
-
-  <button id="serversToggleBtn">
-    <span id="arrow">▼</span>
-    سرورها
+  <!-- بخش اول: انتخاب سرورها -->
+  <button id="serversToggleBtn" aria-expanded="false" aria-controls="serverSelectContainer">
+    <span id="arrow">▼</span> سرورها
   </button>
 
-  <div class="server-select-container hidden" id="serverSelectContainer">
-    <input type="radio" id="server1" name="server" value="server1">
+  <div class="server-select-container hidden" id="serverSelectContainer" aria-label="انتخاب سرور">
+    <input type="radio" id="server1" name="server" value="server1" />
     <label for="server1">سرور 1</label>
-    <input type="radio" id="server2" name="server" value="server2">
+
+    <input type="radio" id="server2" name="server" value="server2" />
     <label for="server2">سرور 2</label>
-    <input type="radio" id="server3" name="server" value="server3">
+
+    <input type="radio" id="server3" name="server" value="server3" />
     <label for="server3">سرور 3</label>
   </div>
 
@@ -294,57 +308,21 @@
 
   <button class="confirm-btn" id="confirmBtn">تأیید</button>
 
+  <!-- بخش دوم: وضعیت سرور -->
+  <div class="server-box-2" role="region" aria-label="وضعیت سرور">
+    <div class="wifi-icon-2" id="wifiIcon">
+      <img src="https://cdn-icons-png.flaticon.com/512/8603/8603448.png" alt="قطع اتصال" />
+    </div>
+
+    <h2 id="statusTitle" class="status-default-2">کلیک کنید</h2>
+    <p class="alert-2">⛔ برای اتصال به ادمین پیام بدهید</p>
+
+    <button class="connect-btn-2" onclick="startConnection()">اتصال</button>
+    <div id="message" class="message-box-2">در حال بررسی وضعیت سرور...</div>
+  </div>
+
 <script>
-  // پنل کاربری باز و بسته شدن
-  const openBtn = document.getElementById('openPanelBtn');
-  const userPanel = document.getElementById('userPanel');
-  const closeBtn = document.getElementById('closePanelBtn');
-  const progressCircle = userPanel.querySelector('.progress-circle');
-  const progressPercent = document.getElementById('progressPercent');
-
-  function animateProgress(from, to, duration) {
-    let start = null;
-    function step(timestamp) {
-      if (!start) start = timestamp;
-      const progress = timestamp - start;
-      const percent = Math.max(to, from - (from - to) * (progress / duration));
-      const degrees = (percent / 100) * 360;
-      progressCircle.style.background = `conic-gradient(#0ff 0deg, #0ff ${degrees}deg, #222 ${degrees}deg 360deg)`;
-      progressPercent.textContent = `${Math.round(percent)}%`;
-      if (progress < duration) {
-        window.requestAnimationFrame(step);
-      } else {
-        progressCircle.style.background = `conic-gradient(#0ff 0deg, #0ff ${to*3.6}deg, #222 ${to*3.6}deg 360deg)`;
-        progressPercent.textContent = `${to}%`;
-      }
-    }
-    window.requestAnimationFrame(step);
-  }
-
-  openBtn.addEventListener('click', () => {
-    userPanel.style.display = 'block';
-    openBtn.setAttribute('aria-expanded', 'true');
-    animateProgress(100, 0, 1000);
-  });
-
-  closeBtn.addEventListener('click', () => {
-    userPanel.style.display = 'none';
-    openBtn.setAttribute('aria-expanded', 'false');
-    progressCircle.style.background = `conic-gradient(#0ff 0deg, #0ff 360deg, #222 360deg 360deg)`;
-    progressPercent.textContent = '100%';
-  });
-
-  closeBtn.addEventListener('keydown', e => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      userPanel.style.display = 'none';
-      openBtn.setAttribute('aria-expanded', 'false');
-      closeBtn.blur();
-      progressCircle.style.background = `conic-gradient(#0ff 0deg, #0ff 360deg, #222 360deg 360deg)`;
-      progressPercent.textContent = '100%';
-    }
-  });
-
-  // عملکرد دکمه سرورها و نمایش پیام‌ها
+  // باز/بسته کردن لیست سرورها
   const serversToggleBtn = document.getElementById('serversToggleBtn');
   const arrow = document.getElementById('arrow');
   const sel = document.getElementById('serverSelectContainer');
@@ -376,7 +354,7 @@
       msg.textContent = 'سرور درحال اتصال است...';
       msg.className = 'message-box msg-green';
       window.connTimer = setTimeout(() => {
-        msg.textContent = '⛔ اتصال ممکن نیست. سرور در حال حاضر آفلاین است.';
+        msg.textContent = 'اتصال قطع شد';
         msg.className = 'message-box msg-red';
       }, 6000);
 
@@ -388,7 +366,7 @@
         t += 1000;
         if (t >= 100000) {
           clearInterval(window.connInterval);
-          msg.textContent = '⛔ اتصال ممکن نیست. سرور در حال حاضر آفلاین است.';
+          msg.textContent = 'اتصال قطع شد';
           msg.className = 'message-box msg-red';
         }
       }, 1000);
@@ -398,10 +376,27 @@
       msg.className = 'message-box msg-orange';
     }
   });
-</script>
 
-</body>
-</html>
+  // وضعیت سرور
+  function startConnection() {
+    const icon = document.getElementById('wifiIcon');
+    const title = document.getElementById('statusTitle');
+    const message = document.querySelector('.message-box-2');
+
+    icon.classList.add('connecting-2');
+    title.textContent = 'در حال اتصال...';
+    title.className = 'status-connecting-2';
+    message.style.display = 'block';
+    message.textContent = 'لطفاً منتظر بمانید...';
+
+    setTimeout(() => {
+      icon.classList.remove('connecting-2');
+      title.textContent = 'سرور آفلاین است!';
+      title.className = 'status-offline-2';
+      message.textContent = '⛔ اتصال ممکن نیست. سرور در حال حاضر آفلاین است.';
+    }, 3000);
+  }
+</script>
 
 </body>
 </html>
