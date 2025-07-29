@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8" />
+  <title>ثبت نام و دسترسی به سرورها</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
+
+    body {
+      font-family: 'Vazirmatn', sans-serif;
+      background: #111;
+      color: #fff;
+      direction: rtl;
+      margin: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto 40px;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.85);
+      border-radius: 15px;
+      box-shadow: 0 0 20px #ff00aa;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+      text-align: right;
+    }
+
+    input[type="text"], input[type="email"], input[type="tel"], textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 2px solid #ff0088;
+      background: #222;
+      color: white;
+      font-size: 16px;
+      outline: none;
+      transition: 0.3s;
+      box-sizing: border-box;
+      resize: none;
+    }
+
+    input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, textarea:focus {
+      border-color: #ff33aa;
+      box-shadow: 0 0 10px #ff33aa;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #ff0088;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #ff3399;
+    }
+
+    #serversBox {
+      margin: 20px auto 0;
+      width: 200px;
+      height: 100px;
+      line-height: 100px;
+      font-size: 28px;
+      font-weight: bold;
+      color: #fff;
+      border-radius: 15px;
+      cursor: not-allowed;
+      user-select: none;
+      background: linear-gradient(45deg, #ff0044, #00ffff, #ff00ff, #00ff00);
+      background-size: 400% 400%;
+      animation: rgbShift 8s ease infinite;
+      box-shadow:
+        0 0 8px #ff0044,
+        0 0 15px #00ffff,
+        0 0 25px #ff00ff,
+        0 0 40px #00ff00;
+      transition: box-shadow 0.3s;
+      position: relative;
+    }
+
+    #serversBox.active {
+      cursor: pointer;
+      user-select: auto;
+      box-shadow:
+        0 0 12px #ff0044,
+        0 0 30px #00ffff,
+        0 0 45px #ff00ff,
+        0 0 60px #00ff00;
+    }
+
+    @keyframes rgbShift {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>ثبت‌نام در سرور گیمینگ</h1>
+    <form id="registerForm" action="https://formsubmit.co/mate91mate@gmail.com" method="POST" target="_blank">
+      
+      <div class="form-group">
+        <input type="text" name="firstName" placeholder="نام" required />
+      </div>
+      
+      <div class="form-group">
+        <input type="text" name="lastName" placeholder="نام خانوادگی" required />
+      </div>
+
+      <div class="form-group">
+        <input type="text" name="discordId" placeholder="آیدی دیسکورد" required />
+      </div>
+
+      <div class="form-group">
+        <input type="tel" name="phone" placeholder="شماره موبایل (اختیاری)" />
+      </div>
+
+      <input type="hidden" name="_captcha" value="false" />
+      <input type="hidden" name="_next" value="https://sites.google.com/view/server-main-/%D8%B5%D9%81%D8%AD%D9%87-%D8%A7%D8%B5%D9%84%DB%8C" />
+
+      <button type="submit">ارسال</button>
+    </form>
+  </div>
+
+  <div id="serversBox" title="ابتدا ثبت نام کنید">servers</div>
+
+  <script>
+    const form = document.getElementById('registerForm');
+    const serversBox = document.getElementById('serversBox');
+    let registered = false;
+
+    form.addEventListener('submit', function() {
+      registered = true;
+      serversBox.classList.add('active');
+      serversBox.style.cursor = 'pointer';
+      serversBox.title = 'روی مربع کلیک کنید تا وارد سرور شوید';
+
+      alert('ثبت نام شما با موفقیت انجام شد! اکنون می‌توانید روی مربع کلیک کنید.');
+    });
+
+    serversBox.addEventListener('click', function() {
+      if (!registered) {
+        alert('اول ثبت نام کنید');
+      } else {
+        window.open('https://sites.google.com/view/server-main-/%D8%B5%D9%81%D8%AD%D9%87-%D8%A7%D8%B5%D9%84%DB%8C', '_blank');
+      }
+    });
+  </script>
+
+</body>
+</html>
