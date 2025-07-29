@@ -2,257 +2,149 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-  <title>وضعیت سرورها</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickMath</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
-
+    @import url('https://fonts.googleapis.com/css?family=Orbitron&display=swap');
     body {
-      margin: 0;
-      font-family: 'Vazirmatn', sans-serif;
-      background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/273126115942507.6067070353764.gif');
-      background-size: cover;
-      background-position: center;
+      margin:0; padding:0;
+      background: url('https://mir‑s3‑cdn‑cf.behance.net/project_modules/1400/273126115942507.6067070353764.gif') center/cover no-repeat;
+      font-family: 'Orbitron', sans-serif;
+      color:#fff;
       direction: rtl;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 40px 10px;
     }
-
-    h1.title {
-      font-size: 32px;
-      text-shadow: 0 0 10px cyan;
-      animation: neonText 1.5s ease-in-out infinite alternate;
-      margin-bottom: 30px;
+    h1 {
+      text-align:center; font-size:60px;
+      animation: neonText 3s ease-in-out infinite alternate;
+      text-shadow:0 0 5px #0ff,0 0 10px #0ff,0 0 20px #0ff,0 0 30px #08f;
+      margin-top:50px;
     }
-
     @keyframes neonText {
       from {
-        text-shadow: 0 0 10px cyan;
+        text-shadow: 0 0 5px #0ff,0 0 10px #0ff;
+        color:#0ff;
       }
       to {
-        text-shadow: 0 0 20px white, 0 0 30px cyan;
+        text-shadow:0 0 20px #0ff,0 0 40px #0ff,0 0 60px #08f;
+        color:#8ff;
       }
     }
-
-    .section {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 30px;
-      margin-bottom: 60px;
+    .buttons { display:flex; justify-content:center; gap:40px; margin-top:40px; }
+    .neon-btn {
+      position:relative;
+      width:200px; height:100px;
+      border:4px solid #0ff;
+      background-size:cover;
+      cursor:pointer;
+      transition: box-shadow .3s;
     }
-
-    .box {
-      width: 360px;
-      min-height: 180px;
-      background: rgba(0,0,0,0.6);
-      border: 3px solid cyan;
-      border-radius: 20px;
-      padding: 30px;
-      text-align: center;
-      box-shadow: 0 0 10px cyan;
+    .neon-btn:hover {
+      box-shadow: 0 0 20px #0ff, 0 0 40px #0ff, 0 0 60px #08f;
     }
-
-    .box h2 {
-      font-size: 24px;
-      margin-bottom: 10px;
+    .neon-btn span {
+      position:absolute; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      font-size:24px; background:rgba(0,0,0,0.3);
     }
-
-    /* Quick Match Section */
-    .server-container {
-      display: flex;
-      gap: 30px;
-      flex-wrap: wrap;
-      justify-content: center;
+    .btn1 { background-image: url('https://4kwallpapers.com/images/walls/thumbs_2t/11129.png'); }
+    .btn2 { background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvnj_wYSNBI2wjdrooFAQVFYNoFNF8N3MgCGc04hwRikoMEtFEZzNkxOE05T97OfHxNl8&usqp=CAU'); }
+    .server-area { text-align:center; margin-top:30px; }
+    .server-area button { padding:10px 20px; font-size:18px; cursor:pointer; color:#0ff; border:2px solid #0ff; }
+    .modal {
+      position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+      background:#000b; padding:20px; border:2px solid #0ff;
+      color:#fff; display:none;
     }
-
-    .server-box {
-      background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65));
-      border: 4px solid;
-      border-radius: 20px;
-      width: 360px;
-      min-height: 420px;
-      padding: 30px 20px;
-      position: relative;
-      animation: rgb-border 4s linear infinite;
-      text-align: center;
+    .modal select, .modal button { margin-top:10px; font-size:16px; }
+    .message { margin-top:20px; font-size:20px; }
+    .user-btn {
+      position:fixed; top:20px; right:20px;
+      padding:10px 15px; border:2px solid #0ff;
+      color:#0ff; cursor:pointer; animation: glowBtn 2s ease-in-out infinite alternate;
     }
-
-    @keyframes rgb-border {
-      0%   { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
-      25%  { border-color: #00ff00; box-shadow: 0 0 15px #00ff00; }
-      50%  { border-color: #0000ff; box-shadow: 0 0 15px #0000ff; }
-      75%  { border-color: #ffff00; box-shadow: 0 0 15px #ffff00; }
-      100% { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
+    @keyframes glowBtn {
+      from { box-shadow:0 0 10px #0ff; }
+      to { box-shadow:0 0 20px #0ff,0 0 30px #08f; }
     }
-
-    .wifi-icon {
-      width: 80px;
-      height: 80px;
-      position: absolute;
-      top: -40px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #121212;
-      padding: 5px;
-      border-radius: 50%;
-      border: 2px solid red;
-      box-shadow: 0 0 10px red;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.4s ease;
+    .user-panel {
+      position:fixed; top:60px; right:20px;
+      width:240px; background: rgba(0,255,200,0.2);
+      border:2px solid #0ff; backdrop-filter:blur(10px);
+      color:#000; padding:10px; display:none;
+      font-size:16px;
     }
-
-    .wifi-icon img {
-      width: 45px;
-      height: 45px;
-      transition: transform 0.4s ease;
+    .user-panel .close-btn {
+      position:absolute; top:5px; left:5px;
+      background:#000; color:#f00; border:none; cursor:pointer;
     }
-
-    .connecting {
-      border-color: #00ff66 !important;
-      box-shadow: 0 0 15px #00ff66 !important;
-      animation: spin 1.2s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: translateX(-50%) rotate(0deg); }
-      100% { transform: translateX(-50%) rotate(360deg); }
-    }
-
-    .connecting img {
-      transform: scale(1.5);
-    }
-
-    .server-box h2 {
-      font-size: 24px;
-      margin-top: 40px;
-      transition: color 0.3s ease;
-    }
-
-    .status-default {
-      color: white;
-    }
-
-    .status-connecting {
-      color: #00ff66;
-      text-shadow: 0 0 10px #00ff66;
-    }
-
-    .status-offline {
-      color: #ff4444;
-    }
-
-    .status-unreachable {
-      color: yellow;
-    }
-
-    .alert {
-      margin-top: 25px;
-      font-size: 16px;
-      color: #ffaaaa;
-    }
-
-    .connect-btn {
-      margin-top: 30px;
-      padding: 12px 25px;
-      font-size: 18px;
-      background-color: #2196f3;
-      border: none;
-      border-radius: 10px;
-      color: white;
-      cursor: pointer;
-      animation: neonText 1.5s ease-in-out infinite alternate;
-    }
-
-    .message-box {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #ffa;
-      display: none;
+    .footnote {
+      position:fixed; bottom:10px; width:100%;
+      text-align:center; font-size:18px;
+      color:#f00; text-shadow:0 0 5px red,0 0 10px red;
     }
   </style>
 </head>
 <body>
-
-  <!-- بخش جداگانه میانی -->
-  <div class="section">
-    <div class="box">
-      <h2>کلیک کنید</h2>
-      <p>برای ورود به سیستم کلیک کنید</p>
-    </div>
-    <div class="box">
-      <h2>کلیک کنید</h2>
-      <p>برای ادامه وارد شوید</p>
-    </div>
+  <button class="user-btn">پنل کاربری</button>
+  <div class="user-panel">
+    <button class="close-btn">×</button>
+    <div>رنک: فعال نشده</div>
+    <div>پلی تایم: ۰ ساعت</div>
+    <div>اشتراک: بدون اشتراک</div>
   </div>
 
-  <!-- عنوان کوییک مچ -->
-  <h1 class="title">Quick Match - Counter Strike</h1>
-
-  <!-- سرورها -->
-  <div class="server-container">
-    <div class="server-box">
-      <div class="wifi-icon" id="wifiIcon1">
-        <img src="https://cdn-icons-png.flaticon.com/512/8603/8603448.png" alt="قطع اتصال">
-      </div>
-      <h2 id="statusTitle1" class="status-default">کلیک کنید</h2>
-      <p class="alert">⛔ برای اتصال به ادمین پیام بدهید</p>
-      <button class="connect-btn" onclick="startConnection(1, 4000, 'offline')">اتصال</button>
-      <div id="message1" class="message-box">در حال بررسی وضعیت سرور...</div>
-    </div>
-
-    <div class="server-box">
-      <div class="wifi-icon" id="wifiIcon2">
-        <img src="https://cdn-icons-png.flaticon.com/512/8603/8603448.png" alt="قطع اتصال">
-      </div>
-      <h2 id="statusTitle2" class="status-default">کلیک کنید</h2>
-      <p class="alert">⛔ برای اتصال به ادمین پیام بدهید</p>
-      <button class="connect-btn" onclick="startConnection(2, 9000, 'offline')">اتصال</button>
-      <div id="message2" class="message-box">در حال بررسی وضعیت سرور...</div>
-    </div>
-
-    <div class="server-box">
-      <div class="wifi-icon" id="wifiIcon3">
-        <img src="https://cdn-icons-png.flaticon.com/512/8603/8603448.png" alt="قطع اتصال">
-      </div>
-      <h2 id="statusTitle3" class="status-default">کلیک کنید</h2>
-      <p class="alert">⛔ برای اتصال به ادمین پیام بدهید</p>
-      <button class="connect-btn" onclick="startConnection(3, 4000, 'unreachable')">اتصال</button>
-      <div id="message3" class="message-box">در حال بررسی وضعیت سرور...</div>
-    </div>
+  <h1>QuickMath</h1>
+  <div class="server-area">
+    <button id="serversBtn">Servers</button>
+  </div>
+  <div class="buttons">
+    <div class="neon-btn btn1"><span>کلیک کنید</span></div>
+    <div class="neon-btn btn2"><span>کلیک کنید</span></div>
   </div>
 
-  <script>
-    function startConnection(id, delay, result) {
-      const icon = document.getElementById('wifiIcon' + id);
-      const title = document.getElementById('statusTitle' + id);
-      const message = document.getElementById('message' + id);
+  <div class="modal" id="srvModal">
+    <div>انتخاب سرور:</div>
+    <select id="srvSelect">
+      <option value="1">سرور اول</option>
+      <option value="2">سرور دوم</option>
+      <option value="3">سرور سوم</option>
+    </select><br>
+    <button id="confirmSrv">تأیید</button>
+    <div class="message" id="srvMsg"></div>
+  </div>
 
-      icon.classList.add('connecting');
-      title.textContent = 'در حال اتصال...';
-      title.className = 'status-connecting';
-      message.style.display = 'block';
-      message.textContent = 'لطفاً منتظر بمانید...';
+  <div class="footnote">برای اتصال به سرورها به ادمین پیام بدهید!</div>
 
-      setTimeout(() => {
-        icon.classList.remove('connecting');
-        if (result === 'offline') {
-          title.className = 'status-offline';
-          title.textContent = 'اتصال قطع شد!';
-          message.textContent = '⛔ اتصال ممکن نیست. سرور در حال حاضر آفلاین است.';
-        } else if (result === 'unreachable') {
-          title.className = 'status-unreachable';
-          title.textContent = 'سرور از دسترس خارج شد!';
-          message.textContent = '⚠️ لطفاً بعداً دوباره تلاش کنید.';
-        }
-      }, delay);
+<script>
+  document.getElementById('serversBtn').onclick = () => {
+    document.getElementById('srvModal').style.display = 'block';
+  };
+  document.getElementById('confirmSrv').onclick = () => {
+    const sel = document.getElementById('srvSelect').value;
+    const msg = document.getElementById('srvMsg');
+    msg.style.fontWeight='bold';
+    if(sel==='1'){
+      msg.textContent='در حال اتصال...'; msg.style.color='lime';
+      setTimeout(()=>{
+        msg.textContent='اتصال قطع شد'; msg.style.color='red';
+      },4000);
     }
-  </script>
-
+    else if(sel==='2'){
+      msg.textContent='در حال اتصال...'; msg.style.color='lime';
+      setTimeout(()=>{
+        msg.textContent='اتصال ممکن نیست'; msg.style.color='red';
+      },4000);
+    }
+    else if(sel==='3'){
+      msg.textContent='سرور از دسترس خارج شده است !'; msg.style.color='orange';
+    }
+  };
+  document.querySelector('.user-btn').onclick = () => {
+    const p = document.querySelector('.user-panel');
+    p.style.display = p.style.display==='block'? 'none':'block';
+  };
+  document.querySelector('.close-btn').onclick = () => {
+    document.querySelector('.user-panel').style.display='none';
+  };
+</script>
 </body>
 </html>
