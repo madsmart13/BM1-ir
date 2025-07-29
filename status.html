@@ -1,149 +1,140 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <title>QuickMath</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
-
-    body {
-      margin:0; padding:0;
-      font-family:'Vazirmatn',sans-serif;
-      direction:rtl; color:#fff;
-      background: url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/273126115942507.6067070353764.gif') center/cover no-repeat;
-      overflow-x:hidden;
-      text-align:center;
-    }
-
-    h1 {
-      font-family:'Orbitron',sans-serif;
-      font-size:4rem; margin-top:40px;
-      animation: glowTitle 3s ease-in-out infinite alternate;
-      text-shadow:0 0 10px rgba(0,255,255,0.8),
-                  0 0 20px rgba(0,255,255,0.6),
-                  0 0 30px rgba(0,170,255,0.4);
-    }
-    @keyframes glowTitle {
-      from { color:#0ff; text-shadow:0 0 10px #0ff,0 0 20px #0ff; }
-      to   { color:#8ff; text-shadow:0 0 20px #8ff,0 0 40px #0ff,0 0 60px #08f; }
-    }
-
-    .user-btn {
-      position:fixed; top:20px; right:20px;
-      padding:10px 14px;
-      font-family:'Orbitron',sans-serif;
-      color:#0ff; border:2px solid #0ff; border-radius:6px;
-      cursor:pointer; z-index:10;
-      animation: glowBtn 2s ease-in-out infinite alternate;
-    }
-    @keyframes glowBtn {
-      from { box-shadow:0 0 8px #0ff; }
-      to   { box-shadow:0 0 16px cyan,0 0 24px #08f; }
-    }
-
-    .user-panel {
-      position:fixed; top:60px; right:20px;
-      width:260px; background:rgba(0,255,255,0.1);
-      border:2px solid #0ff; border-radius:12px;
-      backdrop-filter:blur(8px);
-      padding:16px; color:#000;
-      display:none; z-index:9;
-    }
-    .user-panel .close-btn {
-      position:absolute; top:8px; left:8px;
-      background:#000; color:#f00; border:none;
-      font-size:1.2rem; cursor:pointer;
-    }
-    .user-panel div { margin:8px 0; font-size:1rem; }
-
-    .footnote {
-      position:fixed; bottom:16px; width:100%;
-      font-size:1rem; color:#f00; text-shadow:0 0 5px red;
-    }
-
-    .container { display:flex; justify-content:center; gap:40px; margin:60px auto; }
-
-  </style>
+<meta charset="UTF-8">
+<title>QuickMath + Servers</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
+  body {
+    margin:0; padding:0; direction:rtl;
+    background: url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/273126115942507.6067070353764.gif') center/cover no-repeat;
+    font-family:'Vazirmatn',sans-serif; color:#fff; text-align:center; overflow-x:hidden;
+  }
+  h1 {
+    font-family:'Orbitron',sans-serif; font-size:4rem; margin-top:40px;
+    animation: glowTitle 3s ease-in-out infinite alternate;
+    text-shadow:0 0 10px rgba(0,255,255,0.8), 0 0 20px rgba(0,255,255,0.6), 0 0 30px rgba(0,170,255,0.4);
+  }
+  @keyframes glowTitle {
+    from { color:#0ff; text-shadow:0 0 10px #0ff,0 0 20px #0ff; }
+    to { color:#8ff; text-shadow:0 0 20px #8ff,0 0 40px #0ff,0 0 60px #08f; }
+  }
+  .user-btn {
+    position:fixed; top:20px; right:20px;
+    padding:10px 14px; font-family:'Orbitron',sans-serif;
+    color:#0ff; border:2px solid #0ff; border-radius:6px;
+    cursor:pointer; z-index:10;
+    animation: glowBtn 2s ease-in-out infinite alternate;
+  }
+  @keyframes glowBtn {
+    from { box-shadow:0 0 8px #0ff; }
+    to { box-shadow:0 0 16px cyan,0 0 24px #08f; }
+  }
+  .user-panel {
+    position:fixed; top:60px; right:20px;
+    width:260px; background:rgba(0,255,255,0.1);
+    border:2px solid #0ff; border-radius:12px;
+    backdrop-filter:blur(8px); padding:16px; color:#000;
+    display:none; z-index:9;
+  }
+  .user-panel .close-btn {
+    position:absolute; top:8px; left:8px;
+    background:#000; color:#f00; border:none; font-size:1.2rem;
+    cursor:pointer;
+  }
+  .user-panel div { margin:8px 0; font-size:1rem; }
+  .footnote {
+    position:fixed; bottom:16px; width:100%;
+    font-size:1rem; color:#f00; text-shadow:0 0 5px red;
+  }
+  .container {
+    display:flex; justify-content:center; gap:40px; margin:60px auto;
+  }
+  /* مودال سرورها */
+  .modal {
+    position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+    background:rgba(0,0,0,0.8); padding:20px;
+    border:2px solid cyan; border-radius:12px;
+    color:#fff; display:none; width:260px; text-align:center; z-index:11;
+  }
+  .modal button {
+    margin-top:12px; padding:10px 20px;
+    background:cyan; border:none; border-radius:6px;
+    color:#000; font-size:1rem; cursor:pointer;
+    transition:background .3s;
+  }
+  .modal button:hover { background:#0ff; }
+  .message {
+    margin-top:16px; font-size:1.1rem; font-weight:bold;
+  }
+</style>
 </head>
 <body>
-  <button class="user-btn">پنل کاربری</button>
-  <div class="user-panel">
-    <button class="close-btn">×</button>
-    <div>رنک: <span>فعال نشده</span></div>
-    <div>پلی تایم: <span>۰ ساعت</span></div>
-    <div>اشتراک: <span>بدون اشتراک</span></div>
-  </div>
 
-  <h1>QuickMath</h1>
-  <div class="container">
-    <!-- بخش راست -->
-    <div style="flex:1">
-      <!-- محتوای Right code-->
-      <div class="server-box" id="rightBox" style="max-width:400px;margin:auto;">
-        <div class="wifi-icon" id="wifiIconR">
-          <img src="https://cdn-icons-png.flaticon.com/512/8603/8603448.png" alt="">
-        </div>
-        <h2 id="statusTitleR" class="status-default">کلیک کنید</h2>
-        <p class="alert">⛔ برای اتصال به ادمین پیام بدهید</p>
-        <button class="connect-btn" onclick="startConnR()">اتصال</button>
-        <div id="msgR" class="message-box">در حال بررسی وضعیت سرور...</div>
-      </div>
-    </div>
+<button class="user-btn">پنل کاربری</button>
+<div class="user-panel">
+  <button class="close-btn">×</button>
+  <div>رنک: فعال نشده</div>
+  <div>پلی تایم: ۰ ساعت</div>
+  <div>اشتراک: بدون اشتراک</div>
+</div>
+
+<h1>QuickMath</h1>
+
+<button class="user-btn" style="top:80px;">Servers</button>
+
+<div class="modal" id="srvModal">
+  <div>انتخاب سرور:</div>
+  <select id="srvSelect" style="width:100%; padding:8px;">
+    <option value="1">سرور اول</option>
+    <option value="2">سرور دوم</option>
+    <option value="3">سرور سوم</option>
+  </select>
+  <button onclick="confirmServer()">تأیید</button>
+  <div id="srvMsg" class="message"></div>
+</div>
+
+<div class="container">
+  <!-- چپ و راست ثابت -->
+  <div style="flex:1">
+    <!-- بخش راست (کپی کد شما) -->
+    (کد سرور سمت راست)
+  </div>
+  <div style="flex:1">
     <!-- بخش چپ -->
-    <div style="flex:1">
-      <!-- محتوای Left code-->
-      <div class="server-box" id="leftBox" style="border:4px solid; animation:rgb-border 4s linear infinite; max-width:400px; margin:auto;">
-        <div class="wifi-icon" id="wifiIconL">
-          <img src="https://cdn-icons-png.flaticon.com/512/8603/8603448.png" alt="">
-        </div>
-        <h2 id="statusTitleL" class="status-default">کلیک کنید</h2>
-        <p class="alert">⛔ برای اتصال به ادمین پیام بدهید</p>
-        <button class="connect-btn" onclick="startConnL()">اتصال</button>
-        <div id="msgL" class="message-box">در حال بررسی وضعیت سرور...</div>
-      </div>
-    </div>
+    (کد سرور سمت چپ)
   </div>
+</div>
 
-  <div class="footnote">برای اتصال به سرورها به ادمین پیام دهید!</div>
+<div class="footnote">برای اتصال به سرورها به ادمین پیام دهید!</div>
 
 <script>
-  document.querySelector('.user-btn').onclick = ()=>{
-    const p = document.querySelector('.user-panel');
-    p.style.display = p.style.display==='block' ? 'none':'block';
-  };
-  document.querySelector('.close-btn').onclick = ()=>{
-    document.querySelector('.user-panel').style.display = 'none';
-  };
-
-  function startConnR(){
-    const icon= document.getElementById('wifiIconR');
-    const title= document.getElementById('statusTitleR');
-    const msg = document.getElementById('msgR');
-    icon.classList.add('connecting');
-    title.textContent='در حال اتصال...'; title.className='status-connecting';
-    msg.style.display='block'; msg.textContent='لطفاً منتظر بمانید...';
-    setTimeout(()=>{
-      icon.classList.remove('connecting');
-      title.textContent='سرور آفلاین است!'; title.className='status-offline';
-      msg.textContent='⛔ اتصال ممکن نیست. سرور در حال حاضر آفلاین است.';
-    },3000);
+document.querySelectorAll('.user-btn')[0].onclick = () => {
+  const p = document.querySelector('.user-panel');
+  p.style.display = p.style.display==='block'?'none':'block';
+};
+document.querySelector('.user-panel .close-btn').onclick = () => {
+  document.querySelector('.user-panel').style.display='none';
+};
+document.querySelectorAll('.user-btn')[1].onclick = () => {
+  document.getElementById('srvModal').style.display='block';
+};
+let sel=null;
+function confirmServer(){
+  sel = document.getElementById('srvSelect').value;
+  const m = document.getElementById('srvMsg');
+  if(sel=='1'){
+    m.textContent='در حال اتصال...'; m.style.color='lime';
+    setTimeout(()=>{ m.textContent='اتصال قطع شد'; m.style.color='red'; },4000);
+  } else if(sel=='2'){
+    m.textContent='در حال اتصال...'; m.style.color='lime';
+    setTimeout(()=>{ m.textContent='اتصال ممکن نیست'; m.style.color='red'; },4000);
+  } else if(sel=='3'){
+    m.textContent='سرور از دسترس خارج شده است !'; m.style.color='orange';
   }
-
-  function startConnL(){
-    const icon= document.getElementById('wifiIconL');
-    const title= document.getElementById('statusTitleL');
-    const msg = document.getElementById('msgL');
-    icon.classList.add('connecting');
-    title.textContent='در حال اتصال...'; title.className='status-connecting';
-    msg.style.display='block'; msg.textContent='لطفاً منتظر بمانید...';
-    setTimeout(()=>{
-      icon.classList.remove('connecting');
-      title.textContent='سرور آفلاین است!'; title.className='status-offline';
-      msg.textContent='⛔ اتصال ممکن نیست. سرور در حال حاضر آفلاین است.';
-    },3000);
-  }
+}
 </script>
 </body>
 </html>
