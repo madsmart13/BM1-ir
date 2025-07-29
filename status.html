@@ -1,8 +1,9 @@
+
 <!DOCTYPE html>
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-  <title>دو وضعیت سرور</title>
+  <title>صفحه اصلی گیمینگ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
@@ -24,6 +25,14 @@
       justify-content: center;
       gap: 20px;
       padding: 50px 10px;
+    }
+
+    .panel, .quick-match, .servers, .user-panel {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 20px;
+      border-radius: 15px;
+      margin: 10px;
+      box-shadow: 0 0 10px #00ffff;
     }
 
     .server-box {
@@ -148,9 +157,13 @@
   </style>
 </head>
 <body>
-
   <div class="container">
-    <!-- آیتم اول -->
+    <div class="panel">پنل کاربری</div>
+    <div class="quick-match">Quick Match</div>
+    <div class="servers">سرورهای فعال</div>
+    <div class="user-panel">اطلاعات کاربر</div>
+
+    <!-- آیتم‌های جدید وضعیت سرور -->
     <div class="server-box">
       <div class="wifi-icon" id="wifiIcon1">
         <img src="https://cdn-icons-png.flaticon.com/512/8603/8603448.png" alt="قطع اتصال">
@@ -161,7 +174,6 @@
       <div id="message1" class="message-box">در حال بررسی وضعیت سرور...</div>
     </div>
 
-    <!-- آیتم دوم -->
     <div class="server-box alt">
       <div class="wifi-icon" id="wifiIcon2">
         <img src="https://cdn-icons-png.flaticon.com/512/8603/8603448.png" alt="قطع اتصال">
@@ -193,6 +205,5 @@
       }, 3000);
     }
   </script>
-
 </body>
 </html>
