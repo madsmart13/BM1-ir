@@ -1,126 +1,153 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <title>Quick Match & Panel</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+<meta charset="UTF-8">
+<title>QuickMatch with Panel</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
+  @font-face {
+    font-family: 'Minecraftia';
+    src: url('https://cdn.jsdelivr.net/gh/asteroidmax/minecraftia/Minecraftia.ttf') format('truetype');
+  }
+  body {
+    margin:0; padding:0; direction:rtl;
+    font-family:'Vazirmatn',sans-serif;
+    color:#fff;
+    background: url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/273126115942507.6067070353764.gif')
+                center/cover no-repeat;
+    overflow-x:hidden;
+    text-align:center;
+  }
+  /* Quick Match (کد اصلی شما بدون تغییر) */
+  .neon-title {
+    font-family:'Minecraftia',sans-serif;
+    font-size:48px; margin-top:20px;
+    animation: rgbNeon 6s linear infinite;
+    text-shadow: 0 0 4px #0f0, 0 0 8px #0f0, 0 0 12px #0f0;
+  }
+  @keyframes rgbNeon {
+    0% { color:#00ff00; }
+    33% { color:#00ffff; }
+    66% { color:#ff00ff; }
+    100% { color:#00ff00; }
+  }
+  #serversToggleBtn {
+    font-size:20px; padding:12px 36px;
+    background: linear-gradient(45deg,#556655,#99cc88,#556655);
+    background-size:200% 200%;
+    animation: grayGreenShift 5s ease infinite;
+    color:#aaddaa; border:none; border-radius:10px;
+    box-shadow:0 0 8px #556655,0 0 18px #99cc88;
+    cursor:pointer; display:flex; align-items:center;
+    margin:15px auto;
+  }
+  #serversToggleBtn:hover { transform:scale(1.05); }
+  @keyframes grayGreenShift {
+    0%,100%{ background-position:0% 50%; } 50%{ background-position:100% 50%; }
+  }
+  #arrow { margin-right:8px; transition:transform .3s; }
+  .server-select-container {
+    display:none; /* hidden class */
+    background:linear-gradient(90deg,#0f0c29,#302b63,#24243e);
+    width:220px; padding:10px; border-radius:12px;
+    border:2px solid;
+    animation: neonBorder 8s linear infinite;
+    box-shadow:0 0 8px #0f0,0 0 16px #0f0;
+    margin:0 auto 10px;
+  }
+  @keyframes neonBorder {
+    0%{border-color:#00ff00;}25%{border-color:#00ffaa;}
+    50%{border-color:#55ff55;}75%{border-color:#00ff00;}
+    100%{border-color:#00ffaa;}
+  }
+  label {
+    display:block; padding:6px 10px; font-size:16px;
+    background: rgba(0,255,0,0.1); margin-bottom:10px;
+    border-radius:6px; cursor:pointer;
+  }
+  input[type=radio]{ display:none; }
+  input:checked + label {
+    background:#00ff00; color:#000;
+    box-shadow:0 0 8px #0f0,0 0 12px #0f0;
+    font-weight:bold;
+  }
+  .message-box { font-size:18px; min-height:30px; text-align:center; font-weight:bold; margin-bottom:10px; }
+  .msg-green { color:#00ff00; text-shadow:0 0 6px #0f0; }
+  .msg-red { color:#ff3333; text-shadow:0 0 6px #f33; }
+  .msg-orange { color:#ffa500; text-shadow:0 0 6px #fa0; }
+  .confirm-btn {
+    font-size:18px; padding:10px 40px;
+    background: linear-gradient(45deg,#556655,#99cc88,#1a9988);
+    background-size:300% 300%;
+    animation: rgbBlueGreenShift 6s ease infinite;
+    color:#ccddee; border:none; border-radius:10px;
+    box-shadow:0 0 8px #556655,0 0 18px #1a9988,0 0 28px #4ea;
+    cursor:pointer;
+  }
+  .confirm-btn:hover { transform:scale(1.05); }
+  @keyframes rgbBlueGreenShift {
+    0%,100%{ background-position:0% 50%; } 50%{ background-position:100% 50%; }
+  }
 
-    body {
-      margin:0; padding:0; direction:rtl;
-      font-family:'Vazirmatn',sans-serif;
-      color:#fff; background:#000;
-      background: url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/273126115942507.6067070353764.gif') center/cover no-repeat;
-      text-align:center; overflow-x:hidden;
-    }
+  /* پنل کاربری */
+  #openPanelBtn {
+    position:fixed; top:20px; right:20px;
+    padding:10px 20px; font-size:1rem;
+    font-family:'Orbitron',sans-serif;
+    background:linear-gradient(45deg,#0ff,#f0f);
+    color:#fff; border:none; border-radius:20px;
+    box-shadow:0 0 10px cyan,0 0 20px magenta; cursor:pointer;
+    z-index:100;
+  }
+  #userPanel {
+    position:fixed; top:60px; right:20px;
+    width:360px; background:linear-gradient(145deg,#121212,#1a1a1a);
+    padding:20px; border-radius:20px;
+    box-shadow:0 0 12px cyan,0 0 30px magenta,inset 0 0 20px #222;
+    display:none; color:#ccc; z-index:99;
+  }
+  #userPanel h2 {
+    text-align:center; font-size:1.6rem; color:#0ff; text-shadow:0 0 10px cyan;
+  }
+  .info-row {
+    background:#222; margin:15px 0; padding:14px;
+    border-radius:12px; display:flex; justify-content:space-between;
+    align-items:center; font-size:1rem; color:#aaffff;
+    text-shadow:0 0 6px cyan;
+  }
+  .info-row .label { color:#88eeff; opacity:.7; font-weight:400; }
+  #closePanelBtn {
+    position:absolute; top:15px; left:20px; font-size:24px;
+    color:#f0f; cursor:pointer; font-weight:bold; text-shadow:0 0 8px magenta;
+  }
+  #closePanelBtn:hover { color:#0ff; text-shadow:0 0 12px cyan; }
+  .progress-circle {
+    width:36px; height:36px; border-radius:50%;
+    background: conic-gradient(#0ff 360deg,#222 0deg);
+    box-shadow:0 0 6px cyan inset; margin-left:12px; position:relative;
+  }
+  .progress-circle span {
+    position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    color:#0ff; font-size:14px; font-weight:700; text-shadow:0 0 4px cyan;
+  }
 
-    /* عنوان */
-    .neon-title {
-      font-family:'Orbitron',sans-serif;
-      font-size:3rem; margin-top:20px;
-      animation: glow 4s ease-in-out infinite alternate;
-      text-shadow:0 0 10px cyan,0 0 20px cyan,0 0 30px purple;
-    }
-    @keyframes glow {
-      from { color:#0ff; }
-      to { color:#8ff; }
-    }
-
-    /* پنل کاربری */
-    #openPanelBtn {
-      position:fixed; top:20px; right:20px;
-      padding:10px 20px; font-size:1rem;
-      font-family:'Orbitron',sans-serif;
-      border:none; border-radius:20px;
-      background:linear-gradient(45deg,#0ff,#f0f);
-      color:#fff; cursor:pointer;
-      box-shadow:0 0 10px cyan,0 0 20px magenta;
-      z-index:100;
-    }
-    #userPanel {
-      position:fixed; top:60px; right:20px;
-      width:360px; padding:20px; color:#ccc;
-      background:linear-gradient(145deg,#121212,#1a1a1a);
-      border-radius:20px;
-      box-shadow:0 0 12px cyan,0 0 30px magenta, inset 0 0 20px #222;
-      display:none; z-index:99;
-    }
-    #userPanel h2 {
-      font-size:1.6rem; color:#0ff; text-shadow:0 0 10px cyan; text-align:center;
-    }
-    .info-row {
-      background:#222; margin:15px 0; padding:14px;
-      border-radius:12px; display:flex; justify-content:space-between; align-items:center;
-      font-size:1rem; font-weight:600; color:#aaffff; text-shadow:0 0 6px cyan;
-    }
-    .info-row .label { opacity:0.7; color:#88eeff; font-weight:400; }
-    #closePanelBtn {
-      position:absolute; top:15px; left:20px; font-size:24px;
-      color:#f0f; cursor:pointer; font-weight:bold; text-shadow:0 0 8px magenta;
-    }
-    #closePanelBtn:hover { color:#0ff; text-shadow:0 0 12px cyan; }
-
-    .progress-circle {
-      width:36px; height:36px; border-radius:50%;
-      background: conic-gradient(#0ff 360deg,#222 0deg);
-      box-shadow:0 0 6px cyan inset; margin-left:12px; position:relative;
-    }
-    .progress-circle span {
-      position:absolute; top:50%; left:50%;
-      transform:translate(-50%,-50%);
-      color:#0ff; font-size:14px; font-weight:700; text-shadow:0 0 4px cyan;
-    }
-
-    /* دکمه Servers */
-    #serversBtn {
-      margin-top:20px; padding:12px 24px; font-size:1rem;
-      background:linear-gradient(45deg,#556655,#99cc88,#556655);
-      background-size:200% 200%; color:#aaddaa; border:none; border-radius:10px;
-      box-shadow:0 0 8px #556655,0 0 18px #99cc88;
-      animation: bgShift 5s ease infinite; cursor:pointer;
-    }
-    #serversBtn:hover { transform:scale(1.05); }
-    @keyframes bgShift {
-      0%,100%{ background-position:0% 50%; } 50%{ background-position:100% 50%; }
-    }
-
-    /* مودال انتخاب */
-    .modal {
-      position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
-      background:rgba(0,0,0,0.8); padding:20px;
-      border:2px solid cyan; border-radius:12px;
-      display:none; color:#fff; width:260px; text-align:center; z-index:101;
-    }
-    .modal select{
-      width:100%; padding:8px; margin-top:10px;
-      font-size:1rem;
-    }
-    .modal button {
-      margin-top:12px; padding:10px 20px; font-size:1rem;
-      background:cyan; border:none; border-radius:6px; color:#000;
-      cursor:pointer; transition:background .3s;
-    }
-    .modal button:hover{ background:#0ff; }
-    .message{ margin-top:16px; font-size:1.1rem; font-weight:bold; }
-
-    /* دو بخش کنار هم */
-    .container{
-      display:flex; justify-content:center; gap:40px; margin:40px auto;
-      max-width:900px;
-    }
-    .container > .pane { flex:1; }
-
-  </style>
+  /* دو پن مستقل کنار هم */
+  .container {
+    display:flex; justify-content:center; gap:40px; margin:40px auto;
+    max-width:900px;
+  }
+  .container > .pane { flex:1; }
+</style>
 </head>
 <body>
 
 <button id="openPanelBtn">پنل کاربری</button>
 <div id="userPanel">
-  <div id="closePanelBtn">×</div>
+  <div id="closePanelBtn">&times;</div>
   <h2>پنل کاربری شما</h2>
-  <div class="info-row"><span class="label">رنک:</span><span>فعال نشده</span></div>
+  <div class="info-row"><span class="label">رنک:</span> <span>فعال نشده</span></div>
   <div class="info-row">
     <span class="label">پلی‌تایم:</span>
     <div style="display:flex;align-items:center;">
@@ -128,31 +155,26 @@
       <span>۰ ساعت</span>
     </div>
   </div>
-  <div class="info-row"><span class="label">اشتراک:</span><span>بدون اشتراک</span></div>
+  <div class="info-row"><span class="label">اشتراک:</span> <span>بدون اشتراک</span></div>
 </div>
 
 <div class="neon-title">Quick Match</div>
-<button id="serversBtn">Servers</button>
+<button id="serversToggleBtn"><span id="arrow">▼</span>سرورها</button>
 
-<div class="modal" id="srvModal">
-  <div>انتخاب سرور:</div>
-  <select id="srvSelect">
-    <option value="1">سرور اول</option>
-    <option value="2">سرور دوم</option>
-    <option value="3">سرور سوم</option>
-  </select>
-  <button onclick="confirmSrv()">تأیید</button>
-  <div id="srvMsg" class="message"></div>
+<div class="server-select-container" id="serverSelectContainer">
+  <input type="radio" id="server1" name="server" value="server1"><label for="server1">سرور 1</label>
+  <input type="radio" id="server2" name="server" value="server2"><label for="server2">سرور 2</label>
+  <input type="radio" id="server3" name="server" value="server3"><label for="server3">سرور 3</label>
 </div>
+<div class="message-box" id="messageBox"></div>
+<button class="confirm-btn" id="confirmBtn">تأیید</button>
 
 <div class="container">
   <div class="pane">
-    <!-- کد بخش چپ بدون تغییر -->
-    <!-- … محتوای کامل کد چپ … -->
+    <!-- کد بخش چپ شما بدون تغییر -->
   </div>
   <div class="pane">
-    <!-- کد بخش راست بدون تغییر -->
-    <!-- … محتوای کامل کد راست … -->
+    <!-- کد بخش راست شما بدون تغییر -->
   </div>
 </div>
 
@@ -160,50 +182,55 @@
   const openBtn = document.getElementById('openPanelBtn');
   const panel = document.getElementById('userPanel');
   const closeBtn = document.getElementById('closePanelBtn');
-  const percentEl = document.getElementById('percent');
   const circle = panel.querySelector('.progress-circle');
-
+  const percentEl = document.getElementById('percent');
   openBtn.onclick = () => {
     panel.style.display='block';
-    animateProgress(100, 0, 1000);
+    animateProgress(100,0,1000);
   };
   closeBtn.onclick = () => {
     panel.style.display='none';
     circle.style.background='conic-gradient(#0ff 360deg,#222 0deg)';
     percentEl.textContent='100%';
   };
-  function animateProgress(from, to, duration) {
+  function animateProgress(from,to,dur){
     let start;
-    function step(ts) {
+    function step(ts){
       if(!start) start=ts;
-      const prog = ts-start;
-      const pct = from - ((from-to)*(prog/duration));
-      const deg = (Math.max(pct,to)/100)*360;
-      circle.style.background = `conic-gradient(#0ff 0deg, #0ff ${deg}deg, #222 ${deg}deg 360deg)`;
-      percentEl.textContent = `${Math.round(Math.max(pct,to))}%`;
-      if(prog<duration) requestAnimationFrame(step);
+      const dt=ts-start, pct=Math.max(to,from-((from-to)*(dt/dur))),
+            deg=(pct/100)*360;
+      circle.style.background=`conic-gradient(#0ff 0deg,#0ff ${deg}deg,#222 ${deg}deg 360deg)`;
+      percentEl.textContent=`${Math.round(pct)}%`;
+      if(dt<dur) requestAnimationFrame(step);
       else percentEl.textContent=`${to}%`;
     }
     requestAnimationFrame(step);
   }
 
-  document.getElementById('serversBtn').onclick = () => {
-    document.getElementById('srvModal').style.display='block';
+  const toggle = document.getElementById('serversToggleBtn');
+  const sel = document.getElementById('serverSelectContainer');
+  const arrow = document.getElementById('arrow');
+  const msg = document.getElementById('messageBox');
+  toggle.onclick = ()=> {
+    const hidden = sel.style.display==='none';
+    sel.style.display = hidden?'block':'none';
+    arrow.style.transform = hidden?'rotate(180deg)':'rotate(0deg)';
+    if(hidden) msg.textContent=''; 
   };
-
-  function confirmSrv(){
-    const val = document.getElementById('srvSelect').value;
-    const msg = document.getElementById('srvMsg');
-    if(val==='1'){
-      msg.textContent='در حال اتصال...'; msg.style.color='lime';
-      setTimeout(()=>{ msg.textContent='اتصال قطع شد'; msg.style.color='red'; },4000);
-    } else if(val==='2'){
-      msg.textContent='در حال اتصال...'; msg.style.color='lime';
-      setTimeout(()=>{ msg.textContent='اتصال ممکن نیست'; msg.style.color='red'; },4000);
-    } else if(val==='3'){
-      msg.textContent='سرور از دسترس خارج شده است !'; msg.style.color='orange';
+  document.getElementById('confirmBtn').onclick = ()=>{
+    const v = document.querySelector('input[name="server"]:checked');
+    if(!v){ alert('لطفاً یک سرور انتخاب کنید!'); return; }
+    msg.className='message-box';
+    if(v.value==='server1'){
+      msg.textContent='سرور درحال اتصال است...'; msg.classList.add('msg-green');
+      setTimeout(()=>{ msg.textContent='اتصال قطع شد'; msg.className='message-box msg-red'; },4000);
+    } else if(v.value==='server2'){
+      msg.textContent='سرور در حال اتصال است...'; msg.classList.add('msg-green');
+      setTimeout(()=>{ msg.textContent='اتصال ممکن نیست'; msg.className='message-box msg-red'; },4000);
+    } else if(v.value==='server3'){
+      msg.textContent='سرور از دسترس خارج شده است !'; msg.classList.add('msg-orange');
     }
-  }
+  };
 </script>
 </body>
 </html>
