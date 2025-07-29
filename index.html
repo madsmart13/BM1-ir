@@ -78,7 +78,6 @@
     button:hover {
       background: #ff33aa;
     }
-    /* دکمه صفحه سرورها */
     #goServersBtn {
       background: #00ccff;
       margin-top: 20px;
@@ -91,7 +90,7 @@
 <body>
   <div class="container">
     <h1>ثبت‌نام در سرور گیمینگ</h1>
-    <form action="https://formsubmit.co/mate91mate@gmail.com" method="POST" target="_blank" onsubmit="redirectToStatus(event)">
+    <form action="https://formsubmit.co/mate91mate@gmail.com" method="POST" target="_blank" onsubmit="handleSubmit(event)">
       <div class="form-group">
         <input type="text" name="firstName" placeholder="نام" required />
       </div>
@@ -108,16 +107,27 @@
       <button type="submit">ارسال</button>
     </form>
 
-    <button id="goServersBtn" onclick="window.location.href='status.html'">
+    <button id="goServersBtn" onclick="goToServers()">
       رفتن به صفحه سرورها
     </button>
   </div>
 
   <script>
-    function redirectToStatus(event) {
+    let formSubmitted = false;
+
+    function handleSubmit(event) {
+      formSubmitted = true;
       setTimeout(() => {
         window.location.href = 'status.html';
       }, 1000);
+    }
+
+    function goToServers() {
+      if (formSubmitted) {
+        window.location.href = 'status.html';
+      } else {
+        alert("لطفاً ابتدا فرم ثبت‌نام را پر کنید.");
+      }
     }
   </script>
 </body>
