@@ -1,162 +1,308 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-  <meta charset="UTF-8">
-  <title>داشبورد گیمینگ کامل</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>داشبورد گیمینگ</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
-
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
       font-family: 'Vazirmatn', sans-serif;
-      background-image: url('https://wallpapercave.com/wp/wp2757874.jpg');
+      background: #000 url('https://i.ibb.co/CbBLq6H/wpaper.jpg') no-repeat center
+        center fixed;
+      background-size: cover;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 60px;
+      position: relative;
+    }
+    /* دکمه پنل کاربری */
+    .user-panel-btn {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      background-color: #88f;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 12px;
+      cursor: pointer;
+      z-index: 1000;
+      font-weight: bold;
+      color: white;
+      box-shadow: 0 0 10px #88f;
+      transition: background-color 0.3s ease;
+    }
+    .user-panel-btn:hover {
+      background-color: #55f;
+    }
+    /* پنل کاربری */
+    .user-panel {
+      position: fixed;
+      top: 50px;
+      left: 10px;
+      background-color: rgba(17, 17, 17, 0.95);
+      padding: 1rem 1.5rem;
+      border-radius: 15px;
+      border: 2px solid #f0f;
+      z-index: 1000;
+      width: 280px;
+      display: none;
+      box-shadow: 0 0 15px #f0f;
+      user-select: none;
+    }
+    .user-panel h2 {
+      color: #0ff;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      text-align: center;
+      text-shadow: 0 0 8px #0ff;
+    }
+    .user-panel p {
+      margin: 0.4rem 0;
+      font-size: 1rem;
+      border-bottom: 1px solid #444;
+      padding-bottom: 0.3rem;
+    }
+
+    .container {
+      padding: 2rem;
+      max-width: 1200px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3rem;
+    }
+    .quick-match {
+      text-align: center;
+      margin-top: 0;
+      background: rgba(0, 255, 0, 0.1);
+      padding: 1.5rem 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #0f0;
+      width: 100%;
+      max-width: 400px;
+    }
+    .quick-match select,
+    .quick-match button {
+      display: block;
+      margin: 1rem auto;
+      padding: 0.5rem 1rem;
+      background-color: #0f0;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      color: black;
+      text-shadow: none;
+      transition: background-color 0.3s ease;
+    }
+    .quick-match select:hover,
+    .quick-match button:hover {
+      background-color: #0c0;
+    }
+    .quick-match h1 {
+      color: lime;
+      text-shadow: 0 0 10px #0f0;
+      margin: 0 0 1rem 0;
+    }
+    .status-msg {
+      font-weight: bold;
+      margin-top: 1rem;
+      min-height: 24px;
+    }
+    #serverList {
+      margin-top: 1rem;
+    }
+    /* لیست سرورها */
+    .server-boxes {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 900px;
+    }
+    .server-item {
+      background-color: rgba(17, 17, 17, 0.9);
+      border: 3px solid #0f0;
+      border-radius: 20px;
+      padding: 1rem;
+      width: 250px;
+      text-align: center;
+      box-shadow: 0 0 15px #0f0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      color: white;
+      cursor: default;
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+    .server-item:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px #0f0;
+    }
+    .server-item img.main-img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 0.5rem;
+      object-fit: cover;
+      height: 140px;
+      user-select: none;
+      pointer-events: none;
+    }
+    .server-item .icon {
+      width: 40px;
+      margin-top: -25px;
+      filter: drop-shadow(0 0 2px black);
+      user-select: none;
+      pointer-events: none;
+    }
+    .server-item h3 {
+      margin: 0.4rem 0 0.5rem 0;
+      font-weight: bold;
+      text-shadow: 0 0 5px #0f0;
+    }
+    .server-item p {
+      color: red;
+      margin: 0 0 1rem 0;
+      font-weight: bold;
+      text-shadow: 0 0 5px black;
+    }
+    .server-item button {
+      background-color: #0f0;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+      color: black;
+      transition: background-color 0.3s ease;
+    }
+    .server-item button:hover {
+      background-color: #0c0;
+    }
+
+    /* پس‌زمینه کارت‌های سرور */
+    .server-item.bg1 {
+      background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvnj_wYSNBI2wjdrooFAQVFYNoFNF8N3MgCGc04hwRikoMEtFEZzNkxOE05T97OfHxNl8&usqp=CAU');
       background-size: cover;
       background-position: center;
-      direction: rtl;
+      border-color: #4caf50;
+      box-shadow: 0 0 20px #4caf50;
       color: white;
+      text-shadow: 0 0 6px black;
     }
-
-    .header {
-      text-align: center;
-      padding: 20px;
-      font-size: 30px;
-      font-weight: bold;
-      text-shadow: 0 0 10px #0ff;
-    }
-
-    .user-panel {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: rgba(0, 0, 0, 0.6);
-      padding: 15px;
-      border-radius: 10px;
-      border: 1px solid #0ff;
-      max-width: 250px;
-    }
-
-    .user-panel h3 {
-      margin: 0 0 10px;
-      font-size: 18px;
-    }
-
-    .main-center {
-      text-align: center;
-      margin-top: 100px;
-    }
-
-    .server-section {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-top: 20px;
-    }
-
-    .server-box, .server-box-alt {
-      background: rgba(0, 0, 0, 0.7);
-      border: 2px solid #0ff;
-      border-radius: 10px;
-      padding: 20px;
-      width: 200px;
-      text-align: center;
-      box-shadow: 0 0 10px #0ff;
-    }
-
-    .server-box-alt {
-      border: 4px solid;
-      animation: rgb-border 4s linear infinite;
-    }
-
-    @keyframes rgb-border {
-      0%   { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
-      25%  { border-color: #00ff00; box-shadow: 0 0 15px #00ff00; }
-      50%  { border-color: #0000ff; box-shadow: 0 0 15px #0000ff; }
-      75%  { border-color: #ffff00; box-shadow: 0 0 15px #ffff00; }
-      100% { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
-    }
-
-    .connect-btn {
-      margin-top: 15px;
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #2196f3;
-      border: none;
-      border-radius: 5px;
+    .server-item.bg2 {
+      background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-eKGWpUQylq-qpkS9xbCG5m4VGbfF4-Mxfg&s');
+      background-size: cover;
+      background-position: center;
+      border-color: #2196f3;
+      box-shadow: 0 0 20px #2196f3;
       color: white;
-      cursor: pointer;
-    }
-
-    .row {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 20px;
-      margin: 20px 0;
-    }
-
-    .quick-match {
-      background: rgba(0,0,0,0.6);
-      padding: 20px;
-      border-radius: 10px;
-      border: 1px solid #0ff;
-      margin-bottom: 10px;
+      text-shadow: 0 0 6px black;
     }
   </style>
 </head>
 <body>
-
-  <div class="user-panel">
-    <h3>پنل کاربری</h3>
-    <p>نام: <span id="userName">-</span></p>
-    <p>ایمیل: <span id="userEmail">-</span></p>
+  <button class="user-panel-btn" onclick="togglePanel()">پنل کاربری</button>
+  <div class="user-panel" id="userPanel">
+    <h2>پنل کاربری شما</h2>
+    <p><strong>رَنگ:</strong> فعال نشده!</p>
+    <p><strong>مدت بازی در سرور:</strong> 0 ساعت</p>
+    <p><strong>اشتراک:</strong> بدون اشتراک</p>
   </div>
 
-  <div class="main-center">
+  <div class="container">
     <div class="quick-match">
-      <h2>کوییک مچ</h2>
-    </div>
-
-    <div class="row">
-      <div class="server-box">
-        <h3>سرور 1</h3>
-        <button class="connect-btn">اتصال</button>
-      </div>
-      <div class="server-box">
-        <h3>سرور 2</h3>
-        <button class="connect-btn">اتصال</button>
-      </div>
-      <div class="server-box">
-        <h3>سرور 3</h3>
-        <button class="connect-btn">اتصال</button>
+      <h1>Quick Match</h1>
+      <button onclick="toggleServers()">سرورها ▲</button>
+      <div id="serverList" style="display:none;">
+        <select id="serverSelect">
+          <option value="1">سرور 1</option>
+          <option value="2">سرور 2</option>
+          <option value="3">سرور 3</option>
+        </select>
+        <button onclick="connectServer()">تأیید</button>
+        <div class="status-msg" id="status"></div>
       </div>
     </div>
 
-    <div class="row">
-      <div class="server-box">
-        <h3>اتصال تست 1</h3>
-        <button class="connect-btn">بررسی</button>
+    <div class="server-boxes">
+      <div class="server-item bg1">
+        <img
+          class="main-img"
+          src="https://i.ibb.co/0cM2fzX/wwii.png"
+          alt="WWII"
+          draggable="false"
+        />
+        <img
+          class="icon"
+          src="https://cdn-icons-png.flaticon.com/512/8925/8925522.png"
+          alt="icon"
+          draggable="false"
+        />
+        <h3>کلیک کنید</h3>
+        <p>برای اتصال به ادمین پیام بدهید</p>
+        <button onclick="alert('لطفاً به ادمین پیام دهید!')">اتصال</button>
       </div>
-      <div class="server-box-alt">
-        <h3>اتصال تست 2</h3>
-        <button class="connect-btn">بررسی</button>
+      <div class="server-item bg2">
+        <img
+          class="main-img"
+          src="https://i.ibb.co/vQf5W8B/cs2.png"
+          alt="CS2"
+          draggable="false"
+        />
+        <img
+          class="icon"
+          src="https://cdn-icons-png.flaticon.com/512/8925/8925522.png"
+          alt="icon"
+          draggable="false"
+        />
+        <h3>کلیک کنید</h3>
+        <p>برای اتصال به ادمین پیام بدهید</p>
+        <button onclick="alert('لطفاً به ادمین پیام دهید!')">اتصال</button>
       </div>
     </div>
   </div>
 
   <script>
-    // فقط برای تست: شبیه‌سازی ورود اطلاعات
-    const urlParams = new URLSearchParams(window.location.search);
-    const name = urlParams.get("name") || "کاربر تست";
-    const email = urlParams.get("email") || "test@example.com";
+    function togglePanel() {
+      const panel = document.getElementById('userPanel');
+      panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+    }
 
-    document.getElementById("userName").textContent = name;
-    document.getElementById("userEmail").textContent = email;
+    function toggleServers() {
+      const list = document.getElementById('serverList');
+      list.style.display = list.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function connectServer() {
+      const server = document.getElementById('serverSelect').value;
+      const status = document.getElementById('status');
+
+      if (server === '3') {
+        status.innerHTML = '<span style="color: orange">سرور در دسترس نیست</span>';
+        return;
+      }
+
+      status.innerHTML = '<span style="color: white">در حال اتصال...</span>';
+      setTimeout(() => {
+        status.innerHTML = '<span style="color: red">اتصال قطع شد</span>';
+      }, 5000);
+    }
   </script>
 </body>
 </html>
