@@ -2,103 +2,199 @@
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-  <title>وضعیت سرورها</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuickMath 🌟</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    /* فونت فارسی و Orbitron برای عنوان */
     @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
     body {
       margin:0; padding:0;
       font-family:'Vazirmatn',sans-serif;
       background: url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/273126115942507.6067070353764.gif') center/cover no-repeat;
-      direction:rtl; color:#fff; text-align:center;
+      color:#fff;
+      direction: rtl;
+      overflow-x:hidden;
     }
+
     h1 {
-      font-family:'Orbitron',sans-serif;
-      font-size:56px; margin-top:30px;
-      animation: glowText 3s ease-in-out infinite alternate;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 4rem;
+      text-align: center;
+      margin-top: 40px;
+      animation: glowTitle 3s ease-in-out infinite alternate;
       text-shadow:
-        0 0 5px #0ff, 0 0 10px #0ff,
-        0 0 20px #0ff, 0 0 40px #08f;
+        0 0 10px rgba(0,255,255,0.8),
+        0 0 20px rgba(0,255,255,0.6),
+        0 0 30px rgba(0,170,255,0.4);
     }
-    @keyframes glowText {
-      from { color:#0ff; text-shadow:0 0 5px #0ff,0 0 10px #0ff; }
-      to   { color:#8ff; text-shadow:0 0 20px #0ff,0 0 40px #08f,0 0 60px #0ff; }
+    @keyframes glowTitle {
+      from {
+        color: #0ff;
+        text-shadow: 0 0 10px #0ff, 0 0 20px #0ff;
+      }
+      to {
+        color: #8ff;
+        text-shadow: 0 0 20px #8ff, 0 0 40px #0ff, 0 0 60px #08f;
+      }
     }
-    .container {
-      display:flex; justify-content:center;
-      gap:40px; margin:60px auto 40px;
-    }
+
+    .container { display:flex; justify-content:center; gap:40px; margin:60px auto; }
+
     .server-box {
-      background: linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
-        url('') no-repeat center center;
-      background-size:cover;
-      border:4px solid;
-      border-radius:16px;
-      width:200px; height:120px;
       position:relative;
-      cursor:pointer;
-      box-shadow:0 0 15px cyan,0 0 30px cyan;
-      animation: neonBorder 3s infinite alternate;
+      width:200px; height:120px;
+      border:3px solid cyan;
+      border-radius:12px;
+      background-size:cover;
+      background-position:center;
+      box-shadow: 0 0 10px cyan, 0 0 20px cyan;
+      cursor: pointer;
+      overflow:hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .server-box:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #0ff, 0 0 40px cyan;
     }
     .server-box span {
       position:absolute; inset:0;
       display:flex; align-items:center; justify-content:center;
-      font-size:22px;
+      font-size:1.3rem;
       color:#0ff;
-      text-shadow:0 0 5px #0ff,0 0 10px #0ff;
+      background: rgba(0,0,0,0.3);
     }
     .server1 { background-image:url('https://4kwallpapers.com/images/walls/thumbs_2t/11129.png'); }
     .server2 { background-image:url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvnj_wYSNBI2wjdrooFAQVFYNoFNF8N3MgCGc04hwRikoMEtFEZzNkxOE05T97OfHxNl8&usqp=CAU'); }
-    @keyframes neonBorder {
-      from { border-color:#0ff; box-shadow:0 0 15px cyan; }
-      to   { border-color:#08f; box-shadow:0 0 30px cyan; }
+
+    .modal {
+      position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+      background: rgba(0,0,0,0.8);
+      border:2px solid cyan;
+      padding:20px;
+      border-radius:12px;
+      display:none;
+      color:#fff;
+      text-align:center;
+      width:260px;
     }
-    .hidden { display:none; }
-    .modal { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
-      background:#000b; padding:20px; border:2px solid cyan;
-      color:#fff; display:none; }
-    .modal select, .modal button { margin-top:10px; font-size:16px; padding:6px; }
-    .message { margin-top:20px; font-size:20px; font-weight:bold; }
+    .modal button {
+      margin-top:12px;
+      padding:10px 20px;
+      font-size:1rem;
+      background: cyan;
+      border:none;
+      border-radius:6px;
+      color:#000;
+      cursor:pointer;
+      transition: background 0.3s;
+    }
+    .modal button:hover { background:#0ff; }
+
+    .message {
+      margin-top:16px;
+      font-size:1.1rem;
+      font-weight:bold;
+    }
+
+    /* پنل کاربری */
+    .user-btn {
+      position:fixed; top:20px; right:20px;
+      padding:10px 14px;
+      font-family:'Orbitron',sans-serif;
+      color: #0ff;
+      border:2px solid #0ff;
+      border-radius:6px;
+      cursor: pointer;
+      animation: glowBtn 2s ease-in-out infinite alternate;
+      z-index:10;
+    }
+    @keyframes glowBtn {
+      from { box-shadow: 0 0 8px #0ff; }
+      to   { box-shadow: 0 0 16px cyan, 0 0 24px #08f; }
+    }
+
+    .user-panel {
+      position:fixed; top:60px; right:20px;
+      width:240px; background: rgba(0,255,255,0.1);
+      border:2px solid #0ff;
+      backdrop-filter:blur(8px);
+      border-radius:12px;
+      padding:16px;
+      color:#000;
+      display:none;
+      z-index:9;
+    }
+    .user-panel .close-btn {
+      position:absolute; top:8px; left:8px;
+      background:#000; color:#f00;
+      border:none; font-size:1.1rem;
+      cursor:pointer;
+    }
+    .user-panel div {
+      margin:8px 0;
+    }
+
+    .footnote {
+      position:fixed; bottom:16px; width:100%;
+      text-align:center; font-size:1rem;
+      color:#f00;
+      text-shadow: 0 0 5px red;
+    }
   </style>
 </head>
 <body>
+
+  <button class="user-btn">پنل کاربری</button>
+  <div class="user-panel">
+    <button class="close-btn">×</button>
+    <div>رنک: <span>فعال نشده</span></div>
+    <div>پلی تایم: <span>۰ ساعت</span></div>
+    <div>اشتراک: <span>بدون اشتراک</span></div>
+  </div>
+
   <h1>QuickMath</h1>
+
   <div class="container">
-    <div class="server-box server1" onclick="chooseServer(1)">
-      <span>سرور اول</span>
-    </div>
-    <div class="server-box server2" onclick="chooseServer(2)">
-      <span>سرور دوم</span>
-    </div>
+    <div class="server-box server1" onclick="chooseServer(1)"><span>سرور اول</span></div>
+    <div class="server-box server2" onclick="chooseServer(2)"><span>سرور دوم</span></div>
   </div>
 
   <div class="modal" id="modal">
-    <div>تأیید اتصال به سرور:</div>
-    <button onclick="confirm()">تأیید</button>
+    <div>آیا اتصال به این سرور را تأیید می‌کنید؟</div>
+    <button onclick="confirmConnection()">تأیید</button>
     <div id="msg" class="message"></div>
   </div>
 
+  <div class="footnote">برای اتصال به سرورها به ادمین پیام دهید!</div>
+
 <script>
-  let selected = 0;
+  let selected = null;
   function chooseServer(n) {
     selected = n;
-    document.getElementById('modal').style.display = 'block';
     document.getElementById('msg').textContent = '';
+    document.getElementById('modal').style.display = 'block';
   }
-  function confirm() {
+  function confirmConnection() {
     const msg = document.getElementById('msg');
-    if(selected === 1) {
+    if (selected === 1) {
       msg.textContent = 'در حال اتصال...'; msg.style.color='lime';
-      setTimeout(() => {
-        msg.textContent = 'اتصال قطع شد'; msg.style.color='red';
-      }, 4000);
-    } else if(selected === 2) {
+      setTimeout(() => { msg.textContent = 'اتصال قطع شد'; msg.style.color='red'; }, 4000);
+    }
+    else if (selected === 2) {
       msg.textContent = 'در حال اتصال...'; msg.style.color='lime';
-      setTimeout(() => {
-        msg.textContent = 'اتصال ممکن نیست'; msg.style.color='red';
-      }, 4000);
+      setTimeout(() => { msg.textContent = 'اتصال ممکن نیست'; msg.style.color='red'; }, 4000);
     }
   }
+  document.querySelector('.user-btn').onclick = () => {
+    const p = document.querySelector('.user-panel');
+    p.style.display = p.style.display === 'block' ? 'none' : 'block';
+  };
+  document.querySelector('.close-btn').onclick = () => {
+    document.querySelector('.user-panel').style.display = 'none';
+  };
 </script>
+
 </body>
 </html>
