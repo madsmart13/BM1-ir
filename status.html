@@ -1,12 +1,15 @@
-
 <!DOCTYPE html>
 <html lang="fa">
 <head>
   <meta charset="UTF-8">
-  <title>صفحه اصلی گیمینگ</title>
+  <title>داشبورد گیمینگ کامل</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
@@ -16,41 +19,56 @@
       background-position: center;
       direction: rtl;
       color: white;
-      text-align: center;
     }
 
-    .container {
+    .header {
+      text-align: center;
+      padding: 20px;
+      font-size: 30px;
+      font-weight: bold;
+      text-shadow: 0 0 10px #0ff;
+    }
+
+    .user-panel {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #0ff;
+      max-width: 250px;
+    }
+
+    .user-panel h3 {
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .main-center {
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    .server-section {
       display: flex;
-      flex-wrap: wrap;
       justify-content: center;
       gap: 20px;
-      padding: 50px 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
     }
 
-    .panel, .quick-match, .servers, .user-panel {
-      background-color: rgba(0, 0, 0, 0.6);
+    .server-box, .server-box-alt {
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid #0ff;
+      border-radius: 10px;
       padding: 20px;
-      border-radius: 15px;
-      margin: 10px;
-      box-shadow: 0 0 10px #00ffff;
+      width: 200px;
+      text-align: center;
+      box-shadow: 0 0 10px #0ff;
     }
 
-    .server-box {
-      background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
-                  url('https://media.forgecdn.net/attachments/825/970/ctb_3.jpg') no-repeat center center;
-      background-size: cover;
-      border: 2px solid #00ffff;
-      box-shadow: 0 0 20px #00ffff, 0 0 40px #00ffff;
-      max-width: 400px;
-      width: 100%;
-      padding: 30px 20px;
-      border-radius: 20px;
-      position: relative;
-    }
-
-    .server-box.alt {
-      background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
-        url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIpbiNoYX5ei5NWDxQjgcjeuQZklLU5V9hXw&s');
+    .server-box-alt {
       border: 4px solid;
       animation: rgb-border 4s linear infinite;
     }
@@ -63,147 +81,82 @@
       100% { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
     }
 
-    .wifi-icon {
-      width: 60px;
-      height: 60px;
-      position: absolute;
-      top: -30px;
-      left: 50%;
-      transform: translateX(-50%);
-      background-color: #121212;
-      padding: 5px;
-      border-radius: 50%;
-      border: 2px solid red;
-      box-shadow: 0 0 10px red;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.4s ease;
-    }
-
-    .wifi-icon img {
-      width: 32px;
-      height: 32px;
-      transition: transform 0.4s ease;
-    }
-
-    .connecting {
-      border-color: #00ff66 !important;
-      box-shadow: 0 0 15px #00ff66 !important;
-      animation: spin 1.2s linear infinite;
-    }
-
-    @keyframes spin {
-      0% { transform: translateX(-50%) rotate(0deg); }
-      100% { transform: translateX(-50%) rotate(360deg); }
-    }
-
-    .connecting img {
-      transform: scale(1.5);
-    }
-
-    .server-box h2 {
-      font-size: 24px;
-      margin-top: 40px;
-      transition: color 0.3s ease;
-    }
-
-    .status-default {
-      color: white;
-    }
-
-    .status-connecting {
-      color: #63e68a;
-      text-shadow: 0 0 10px #63e68a;
-    }
-
-    .status-offline {
-      color: #ff4444;
-    }
-
-    .alert {
-      margin-top: 25px;
-      font-size: 16px;
-      color: #ffaaaa;
-    }
-
     .connect-btn {
-      margin-top: 30px;
-      padding: 12px 25px;
-      font-size: 18px;
+      margin-top: 15px;
+      padding: 10px 20px;
+      font-size: 16px;
       background-color: #2196f3;
       border: none;
-      border-radius: 10px;
+      border-radius: 5px;
       color: white;
       cursor: pointer;
-      transition: background 0.3s;
     }
 
-    .connect-btn:hover {
-      background-color: #1976d2;
+    .row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin: 20px 0;
     }
 
-    .message-box {
-      margin-top: 20px;
-      font-size: 14px;
-      color: #ffa;
-      display: none;
-    }
-
-    .server-box.alt .status-connecting {
-      color: #00ff66;
-      text-shadow: 0 0 10px #00ff66;
+    .quick-match {
+      background: rgba(0,0,0,0.6);
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid #0ff;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="panel">پنل کاربری</div>
-    <div class="quick-match">Quick Match</div>
-    <div class="servers">سرورهای فعال</div>
-    <div class="user-panel">اطلاعات کاربر</div>
 
-    <!-- آیتم‌های جدید وضعیت سرور -->
-    <div class="server-box">
-      <div class="wifi-icon" id="wifiIcon1">
-        <img src="https://cdn-icons-png.flaticon.com/512/8603/8603448.png" alt="قطع اتصال">
-      </div>
-      <h2 id="statusTitle1" class="status-default">کلیک کنید</h2>
-      <p class="alert">⛔ برای اتصال به ادمین پیام بدهید</p>
-      <button class="connect-btn" onclick="startConnection('1')">اتصال</button>
-      <div id="message1" class="message-box">در حال بررسی وضعیت سرور...</div>
+  <div class="user-panel">
+    <h3>پنل کاربری</h3>
+    <p>نام: <span id="userName">-</span></p>
+    <p>ایمیل: <span id="userEmail">-</span></p>
+  </div>
+
+  <div class="main-center">
+    <div class="quick-match">
+      <h2>کوییک مچ</h2>
     </div>
 
-    <div class="server-box alt">
-      <div class="wifi-icon" id="wifiIcon2">
-        <img src="https://cdn-icons-png.flaticon.com/512/8603/8603448.png" alt="قطع اتصال">
+    <div class="row">
+      <div class="server-box">
+        <h3>سرور 1</h3>
+        <button class="connect-btn">اتصال</button>
       </div>
-      <h2 id="statusTitle2" class="status-default">کلیک کنید</h2>
-      <p class="alert">⛔ برای اتصال به ادمین پیام بدهید</p>
-      <button class="connect-btn" onclick="startConnection('2')">اتصال</button>
-      <div id="message2" class="message-box">در حال بررسی وضعیت سرور...</div>
+      <div class="server-box">
+        <h3>سرور 2</h3>
+        <button class="connect-btn">اتصال</button>
+      </div>
+      <div class="server-box">
+        <h3>سرور 3</h3>
+        <button class="connect-btn">اتصال</button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="server-box">
+        <h3>اتصال تست 1</h3>
+        <button class="connect-btn">بررسی</button>
+      </div>
+      <div class="server-box-alt">
+        <h3>اتصال تست 2</h3>
+        <button class="connect-btn">بررسی</button>
+      </div>
     </div>
   </div>
 
   <script>
-    function startConnection(id) {
-      const icon = document.getElementById('wifiIcon' + id);
-      const title = document.getElementById('statusTitle' + id);
-      const message = document.getElementById('message' + id);
+    // فقط برای تست: شبیه‌سازی ورود اطلاعات
+    const urlParams = new URLSearchParams(window.location.search);
+    const name = urlParams.get("name") || "کاربر تست";
+    const email = urlParams.get("email") || "test@example.com";
 
-      icon.classList.add('connecting');
-      title.textContent = 'در حال اتصال...';
-      title.className = 'status-connecting';
-      message.style.display = 'block';
-      message.textContent = 'لطفاً منتظر بمانید...';
-
-      setTimeout(() => {
-        icon.classList.remove('connecting');
-        title.textContent = 'سرور آفلاین است!';
-        title.className = 'status-offline';
-        message.textContent = '⛔ اتصال ممکن نیست. سرور در حال حاضر آفلاین است.';
-      }, 3000);
-    }
+    document.getElementById("userName").textContent = name;
+    document.getElementById("userEmail").textContent = email;
   </script>
 </body>
 </html>
