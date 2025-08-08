@@ -4,16 +4,12 @@
   <meta charset="UTF-8" />
   <title>داشبورد گیمینگ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap"
-    rel="stylesheet"
-  />
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;700&display=swap" rel="stylesheet"/>
   <style>
     body {
       margin: 0;
       font-family: 'Vazirmatn', sans-serif;
-      background: #000 url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/273126115942507.6067070353764.gif') no-repeat center
-        center fixed;
+      background: #000 url('https://mir-s3-cdn-cf.behance.net/project_modules/1400/273126115942507.6067070353764.gif') no-repeat center center fixed;
       background-size: cover;
       color: white;
       min-height: 100vh;
@@ -53,9 +49,16 @@
       border: 2px solid #f0f;
       z-index: 1000;
       width: 280px;
-      display: none;
       box-shadow: 0 0 15px #f0f;
       user-select: none;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+    .user-panel.show {
+      opacity: 1;
+      max-height: 500px;
     }
     .user-panel h2 {
       color: #0ff;
@@ -123,6 +126,14 @@
     }
     #serverList {
       margin-top: 1rem;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+    #serverList.show {
+      opacity: 1;
+      max-height: 300px;
     }
     /* لیست سرورها */
     .server-boxes {
@@ -165,14 +176,13 @@
       user-select: none;
       pointer-events: none;
     }
-        .server-item .icon {
+    .server-item .icon {
       width: 40px;
       margin-top: -25px;
       filter: drop-shadow(0 0 2px black);
       user-select: none;
       pointer-events: none;
     }
-
     .server-item h3 {
       margin: 0.4rem 0 0.5rem 0;
       font-weight: bold;
@@ -197,8 +207,6 @@
     .server-item button:hover {
       background-color: #0c0;
     }
-
-    /* پس‌زمینه کارت‌های سرور */
     .server-item.bg1 {
       background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT65k6y6vkbHJ9ZrgkqaXKZlJU5W7UKygQvNw&s');
       background-size: cover;
@@ -229,10 +237,22 @@
   </div>
 
   <div class="container">
+    <!-- بخش دانلود فایل -->
+    <div style="margin-top:1rem; background:rgba(0,0,0,0.7); padding:1.5rem; border-radius:15px; border:2px solid #ff2a6d; max-width:500px; text-align:center; box-shadow:0 0 15px #ff2a6d;">
+      <p style="font-weight:bold; color:red; font-size:1rem; line-height:1.8;">
+        قبل ورود به سرور این فایل را دانلود کنید و در پوشه <span style="color:#0ff;">mods</span> در <span style="color:#0ff;">TLauncher</span> بگذارید.<br>
+        اگر به مشکلی خوردید به پشتیبانی پیام بدهید.<br>
+        نسخه بازی شما باید <span style="color:#ff6666;">1.20.1 Forge</span> باشد.
+      </p>
+      <a href="https://s34.picofile.com/file/8486324276/BlockFront_1_20_1_0_2_0_19a_RELEASE.jar.html" target="_blank" style="display:inline-block; margin-top:1rem; padding:0.7rem 1.5rem; background:#ff2a6d; color:white; font-weight:bold; text-decoration:none; border-radius:10px; box-shadow:0 0 10px #ff2a6d; transition:background 0.3s ease;">
+        📥 دانلود فایل
+      </a>
+    </div>
+
     <div class="quick-match">
       <h1>Quick Match</h1>
       <button onclick="toggleServers()">سرورها ▲</button>
-      <div id="serverList" style="display:none;">
+      <div id="serverList">
         <select id="serverSelect">
           <option value="1">سرور 1</option>
           <option value="2">سرور 2</option>
@@ -245,35 +265,15 @@
 
     <div class="server-boxes">
       <div class="server-item bg1">
-        <img
-          class="main-img"
-          src="https://i.ibb.co/0cM2fzX/wwii.png"
-          alt="WWII"
-          draggable="false"
-        />
-        <img
-          class="icon"
-          src="https://cdn-icons-png.flaticon.com/512/8925/8925522.png"
-          alt="icon"
-          draggable="false"
-        />
+        <img class="main-img" src="https://i.ibb.co/0cM2fzX/wwii.png" alt="WWII" draggable="false"/>
+        <img class="icon" src="https://cdn-icons-png.flaticon.com/512/8925/8925522.png" alt="icon" draggable="false"/>
         <h3>کلیک کنید</h3>
         <p>برای اتصال به ادمین پیام بدهید</p>
         <button onclick="alert('لطفاً به ادمین پیام دهید!')">اتصال</button>
       </div>
       <div class="server-item bg2">
-        <img
-          class="main-img"
-          src="https://i.ibb.co/vQf5W8B/cs2.png"
-          alt="CS2"
-          draggable="false"
-        />
-        <img
-          class="icon"
-          src="https://cdn-icons-png.flaticon.com/512/8925/8925522.png"
-          alt="icon"
-          draggable="false"
-        />
+        <img class="main-img" src="https://i.ibb.co/vQf5W8B/cs2.png" alt="CS2" draggable="false"/>
+        <img class="icon" src="https://cdn-icons-png.flaticon.com/512/8925/8925522.png" alt="icon" draggable="false"/>
         <h3>کلیک کنید</h3>
         <p>برای اتصال به ادمین پیام بدهید</p>
         <button onclick="alert('لطفاً به ادمین پیام دهید!')">اتصال</button>
@@ -281,50 +281,32 @@
     </div>
   </div>
 
+  <footer style="margin-top: 3rem; text-align: center; padding: 1rem;" dir="rtl">
+    <a href="https://sites.google.com/view/server-main-/%D8%B5%D9%81%D8%AD%D9%87-%D8%A7%D8%B5%D9%84%DB%8C" target="_blank" rel="noopener" style="color:#ff2a6d; font-weight:bold; font-size:1.2rem; text-decoration:none; font-family:'Vazirmatn',sans-serif;
+           text-shadow:0 0 3px rgba(255,42,109,.6), 0 0 6px rgba(255,42,109,.35);">
+      در صورت مشکل، به سایت دوم مراجعه کنید (سرور 2) — اینجا کلیک کنید *
+    </a>
+  </footer>
+
   <script>
     function togglePanel() {
-      const panel = document.getElementById('userPanel');
-      panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+      document.getElementById('userPanel').classList.toggle('show');
     }
-
     function toggleServers() {
-      const list = document.getElementById('serverList');
-      list.style.display = list.style.display === 'block' ? 'none' : 'block';
+      document.getElementById('serverList').classList.toggle('show');
     }
-
     function connectServer() {
       const server = document.getElementById('serverSelect').value;
       const status = document.getElementById('status');
-
       if (server === '3') {
         status.innerHTML = '<span style="color: orange">سرور در دسترس نیست</span>';
         return;
       }
-
       status.innerHTML = '<span style="color: white">در حال اتصال...</span>';
       setTimeout(() => {
         status.innerHTML = '<span style="color: red">اتصال قطع شد</span>';
       }, 5000);
     }
   </script>
-  <!-- ...کد قبلی بالا... -->
-
-  </div> <!-- پایان container -->
-<!-- بخش متن زیر صفحه -->
-<footer style="margin-top: 3rem; text-align: center; padding: 1rem;" dir="rtl">
-  <a
-    href="https://sites.google.com/view/server-main-/%D8%B5%D9%81%D8%AD%D9%87-%D8%A7%D8%B5%D9%84%DB%8C"
-    target="_blank" rel="noopener"
-    style="color:#ff2a6d; font-weight:bold; font-size:1.2rem; text-decoration:none; font-family:'Vazirmatn',sans-serif;
-           text-shadow:0 0 3px rgba(255,42,109,.6), 0 0 6px rgba(255,42,109,.35);"
-  >
-    در صورت مشکل، به سایت دوم مراجعه کنید (سرور 2) — اینجا کلیک کنید *
-  </a>
-</footer>
-
-  
-
-<!-- ...ادامه کد ... -->
-
 </body>
 </html>
